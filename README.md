@@ -12,7 +12,7 @@
 3. Add CitizenFX.Core.dll as a reference.
 (For detailed instructions, [click here](https://docs.fivem.net/docs/scripting-manual/runtimes/csharp/ "refer here"))
 
-For documentation, [click here](https://github.com/KDani-99/FivePD-API/wiki).
+For documentation, [visit the "wiki" tab](https://github.com/KDani-99/FivePD-API/wiki).
 
 [Fields and properties](https://github.com/KDani-99/FivePD-API/wiki/Fields-and-Properties)
 
