@@ -88,7 +88,7 @@ protected void OnAccept(float circleRadius = 75f, BlipColor color = BlipColor.Ye
 public virtual async Task Init() { }
 ```
 #### Event Methods
-You can define your own logic for events. These events will be called automatically by the calloutmanager.
+You can define your own logic for events. These events will be called by the calloutmanager.
 
 What should these be used for?
 Well, events can be pretty useful if you want different actions to happen in different events. For example, you can change the ped task to attack the player, flee or give up.
