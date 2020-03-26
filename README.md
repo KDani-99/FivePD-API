@@ -15,5 +15,7 @@
 For documentation, [click here](https://github.com/KDani-99/FivePD-API/wiki).
 
 [Fields and properties](https://github.com/KDani-99/FivePD-API/wiki/Fields-and-Properties)
+
 [Methods and events](https://github.com/KDani-99/FivePD-API/wiki/Methods-and-Events)
+
 [CalloutPropertiesAttribute](https://github.com/KDani-99/FivePD-API/wiki/CalloutPropertiesAttribute)
