@@ -1,4 +1,4 @@
-# FivePD-API
+# FivePD API
 
 ### Get started
 
