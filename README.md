@@ -62,4 +62,56 @@ It is mainly used by the callout manager to determine whether to reward a player
 ```cs
 public bool Started;
 ```
+Callout probability. How often the callout is available.
+```cs
+public enum Probability
+{
+    Low,
+    Medium,
+    High
+}
+```
+#### Available Methods
+```cs
+protected async Task<Ped> SpawnPed(PedHash pedHash,Vector3 location,float heading = 0f) {}
+```
+```cs
+protected async Task<Vehicle> SpawnVehicle(VehicleHash vehicleHash,Vector3 location,float heading = 0f) {}
+```
+```cs
+protected void InitBase(Vector3 location) {}
+```
+```cs
+protected void OnAccept(float circleRadius = 75f, BlipColor color = BlipColor.Yellow, BlipSprite sprite = BlipSprite.BigCircle, int alpha = 100) {}
+```
+```cs
+public virtual async Task Init() { }
+```
+#### Event Methods
+You can define your own logic for events. These events will be called automatically by the calloutmanager.
 
+What should these be used for?
+Well, events can be pretty useful if you want different actions to happen in different events. For example, you can change the ped task to attack the player, flee or give up.
+
+New events will be added in the future. If you'd like to have a new event added, create a pull request.
+
+```cs
+public virtual void OnStart(Ped closest) {}
+```
+OnStart is called when the callout starts. 
+```cs
+public virtual void OnBackupCalled(int code) { } // 1,2,3,99
+```
+OnBackupCalled is called when the player calls for backup (backup code is passed as a param)
+```cs
+public virtual void OnPlayerRevokedBackup(Player player) { } 
+```
+OnPlayerRevokedBackup is called when someone stops respoding to the backup request. (The player who accepted the backup, not the player who requested it!)
+```cs
+public virtual void OnCancelBefore() { } // Called before Destruct()
+```
+OnCancelBefore is called before calloutmanager cleans up the call (entities).. 
+```cs
+public virtual void OnCancelAfter() { } // Called after Destruct()
+```
+OnCancelAfter is called after calloutmanager cleans up the call (entities).
