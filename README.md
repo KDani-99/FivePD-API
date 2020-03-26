@@ -2,6 +2,8 @@
 
 ### Get started
 
+Before you start making your callouts, it's recommended to take a look at [how to write your first script in FiveM](https://docs.fivem.net/docs/scripting-manual/runtimes/csharp/) as this API is basically nothing more, but a wrapper to make it easier to write callouts with the reduced chance of doing something error prone (With extended features).
+
 ##### Creating a new callout using the example
 1. Download the CalloutExample project.
 2. Open the project and start making your new callout.
