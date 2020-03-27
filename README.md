@@ -14,7 +14,12 @@ Before you start making your callouts, it's recommended to take a look at [how t
 
 ##### Creating a new callout using the example
 1. Download the CalloutExample project.
-2. Open the project and start making your new callout.
+2. Open the file and start making your new callout.<br/>
+(3). Type the following command in cmd (cs compiler) to compile your code.: (Assuming that you have the references in the same directory)<br/>
+**Note:** .net.dll must be the assembly name.
+```
+csc -target:library CalloutName.cs -reference:CalloutAPI.net.dll -reference:CitizenFX.Core.dll -out:CalloutName.net.dll
+```
 
 ##### From scratch in Visual Studio
 1. Create a new C# Class Library project and make sure the target framework version is 4.5.2.
