@@ -16,7 +16,7 @@ Before you start making your callouts, it's recommended to take a look at [how t
 1. Download the CalloutExample project.
 2. Open the file and start making your new callout.
 3. Type the following command in cmd (cs compiler) to compile your code.: (Assuming that you have the references in the same directory)<br/>
-**Note:** .net.dll must be the assembly name.
+**Note:** .net.dll must be the assembly name. (For detailed instructions, [visit the official command line building csc](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/command-line-building-with-csc-exe))
 ```
 csc -target:library CalloutName.cs -reference:CalloutAPI.net.dll -reference:CitizenFX.Core.dll -out:CalloutName.net.dll
 ```
