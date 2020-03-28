@@ -107,6 +107,9 @@ namespace CalloutAPI
             
             return vehicle;
         }
+        /// <summary>
+        /// Returns a random PedHash, excluding animal Peds.
+        /// </summary>
         protected PedHash GetRandomPed()
         {
             PedHash ped;
