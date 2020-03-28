@@ -1,0 +1,6 @@
+D:\Work\fivem\FivePD-API\Callouts\_output\Mugging.net.dll
+D:\Work\fivem\FivePD-API\Callouts\_output\Mugging.net.pdb
+D:\Work\fivem\FivePD-API\Callouts\Mugging\obj\Debug\Mugging.csprojAssemblyReference.cache
+D:\Work\fivem\FivePD-API\Callouts\Mugging\obj\Debug\Mugging.csproj.CoreCompileInputs.cache
+D:\Work\fivem\FivePD-API\Callouts\Mugging\obj\Debug\Mugging.net.dll
+D:\Work\fivem\FivePD-API\Callouts\Mugging\obj\Debug\Mugging.net.pdb
