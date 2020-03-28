@@ -107,6 +107,23 @@ namespace CalloutAPI
             
             return vehicle;
         }
+        /// <summary>
+        /// Returns a random PedHash, excluding animal Peds.
+        /// </summary>
+        protected PedHash GetRandomPed()
+        {
+            PedHash ped;
+
+            Random rnd = new Random();
+
+            do
+            {
+                var pedHashes = Enum.GetValues(typeof(PedHash));
+                ped = (PedHash)pedHashes.GetValue(rnd.Next(0, pedHashes.Length));
+            } while (ped == default || ped == PedHash.Dolphin || ped == PedHash.KillerWhale || ped == PedHash.Fish || ped == PedHash.HammerShark || ped == PedHash.TigerShark || ped == PedHash.Boar || ped == PedHash.Cat || ped == PedHash.ChickenHawk || ped == PedHash.Chimp || ped == PedHash.Coyote || ped == PedHash.Cow || ped == PedHash.Deer || ped == PedHash.Pig || ped == PedHash.Rabbit || ped == PedHash.Crow || ped == PedHash.Cormorant || ped == PedHash.Husky || ped == PedHash.Rottweiler || ped == PedHash.Pug || ped == PedHash.Poodle || ped == PedHash.Retriever || ped == PedHash.Seagull);
+
+            return ped;
+        }
 
         protected void InitBase(Vector3 location)
         {
@@ -204,6 +221,7 @@ namespace CalloutAPI
     {
         /// <summary>The name of the callout(Not the in game dispatch display name)</summary>
         public string name { get; private set; }
+        public string author { get; private set; }
         public string version { get; private set; }
         /// <summary>The probability of the callout which can be: Probability.Low - Probability.Medium - Probability.High</summary>
         public Callout.Probability probability { get; private set; }
@@ -213,11 +231,12 @@ namespace CalloutAPI
         /// </summary>
         /// <param name="name">The name of the callout (Not the in game dispatch display name)</param>
         /// <param name="probability">Set the probability of the callout (eg. Probability.Low)</param>
-        public CalloutPropertiesAttribute(string name, string version,Callout.Probability probability)
+        public CalloutPropertiesAttribute(string name, string author,string version,Callout.Probability probability)
         {
             this.name = name;
             this.version = version;
             this.probability = probability;
+            this.author = author;
         }
     }
 }
