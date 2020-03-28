@@ -67,6 +67,12 @@
             Probability (Low-Medium-High)
             </summary>
         </member>
+        <member name="M:CalloutAPI.Callout.OnAccept(System.Single,CitizenFX.Core.BlipColor,CitizenFX.Core.BlipSprite,System.Int32)">
+            <summary>
+            OnAccept will be called when the player accepts the call.
+            You must call base.OnAccept(args) to initialise the default properties
+            </summary>
+        </member>
         <member name="M:CalloutAPI.Callout.Init">
             <summary>
             Init() will be automatically invoked by the CalloutManager<br/>
@@ -106,7 +112,7 @@
         <member name="P:CalloutAPI.CalloutPropertiesAttribute.probability">
             <summary>The probability of the callout which can be: Probability.Low - Probability.Medium - Probability.High</summary>
         </member>
-        <member name="M:CalloutAPI.CalloutPropertiesAttribute.#ctor(System.String,System.String,CalloutAPI.Callout.Probability)">
+        <member name="M:CalloutAPI.CalloutPropertiesAttribute.#ctor(System.String,System.String,System.String,CalloutAPI.Callout.Probability)">
             <summary>
             Callout properties
             </summary>
