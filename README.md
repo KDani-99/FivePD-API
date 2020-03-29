@@ -1,4 +1,6 @@
-# FivePD API
+<p align="center">
+  <img src="https://github.com/KDani-99/FivePD-API/blob/master/Images/logo.svg" width="640" height="320" />
+</p>
 
 ### Reporting errors
 
