@@ -62,9 +62,20 @@
             It is mainly used by the callout manager to determine whether to reward a player or not
             </summary>
         </member>
+        <member name="P:CalloutAPI.Callout.FixedLocation">
+            <summary>
+            Marks whether the callout spawns at the same location (not random)
+            If it is set to true, only 1 player can receive this call at the same time (meaning that it won't show up for others till the player completes the call)
+            </summary>
+        </member>
         <member name="T:CalloutAPI.Callout.Probability">
             <summary>
             Probability (Low-Medium-High)
+            </summary>
+        </member>
+        <member name="M:CalloutAPI.Callout.GetRandomPed">
+            <summary>
+            Returns a random PedHash, excluding animal Peds.
             </summary>
         </member>
         <member name="M:CalloutAPI.Callout.OnAccept(System.Single,CitizenFX.Core.BlipColor,CitizenFX.Core.BlipSprite,System.Int32)">

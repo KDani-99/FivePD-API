@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
-using System.Reflection;
-using System.Collections;
-using System.Text.RegularExpressions;
+
 namespace CalloutAPI
 {
     /* This class is referenced in the main plugin to call the CalloutAPI's `LoadCallouts` method */
@@ -64,6 +60,15 @@ namespace CalloutAPI
             get;
             private set;
         }
+        /// <summary>
+        /// Marks whether the callout spawns at the same location (not random)
+        /// If it is set to true, only 1 player can receive this call at the same time (meaning that it won't show up for others till the player completes the call)
+        /// </summary>
+        public bool FixedLocation
+        {
+            get;
+            private set;
+        }
 
         public float Radius;
         public Callout() { }
@@ -79,7 +84,7 @@ namespace CalloutAPI
 
         /* Gameplay related methods */
 
-        protected async Task<Ped> SpawnPed(PedHash pedHash,Vector3 location,float heading = 0f)
+        protected async Task<Ped> SpawnPed(PedHash pedHash, Vector3 location, float heading = 0f)
         {
             uint model = (uint)pedHash;
 
@@ -93,7 +98,7 @@ namespace CalloutAPI
 
             return ped;
         }
-        protected async Task<Vehicle> SpawnVehicle(VehicleHash vehicleHash,Vector3 location,float heading = 0f)
+        protected async Task<Vehicle> SpawnVehicle(VehicleHash vehicleHash, Vector3 location, float heading = 0f)
         {
             uint model = (uint)vehicleHash;
 
@@ -104,7 +109,7 @@ namespace CalloutAPI
 
             Vehicle vehicle = (Vehicle)Entity.FromHandle(CreateVehicle(model, location.X, location.Y, location.Z, heading, true, true));
             SetEntityAsMissionEntity(vehicle.Handle, true, true);
-            
+
             return vehicle;
         }
         /// <summary>
@@ -134,6 +139,7 @@ namespace CalloutAPI
             this.ResponseCode = -1;
             this.Location = location;
             this.Identifier = Guid.NewGuid().ToString();
+            this.FixedLocation = false;
         }
         /// <summary>
         /// OnAccept will be called when the player accepts the call.
@@ -166,7 +172,7 @@ namespace CalloutAPI
             this.Started = true;
             if (closest.NetworkId != Game.PlayerPed.NetworkId)
             {
-                this.AssignedPlayers.Add(closest);               
+                this.AssignedPlayers.Add(closest);
             }
         }
         public virtual void OnBackupCalled(int code) { } // 1,2,3,99
@@ -189,7 +195,7 @@ namespace CalloutAPI
         /* Experimental below */
         public List<object> Clues;
         /* If a criminal gets X distance away, attach a question mark nearby at every Y secs */
-        protected void AttachClueToPed(Ped ped,float minDistance,int repeat = 15)
+        protected void AttachClueToPed(Ped ped, float minDistance, int repeat = 15)
         {
             if (this.Clues == null)
                 this.Clues = new List<object>();
@@ -202,12 +208,12 @@ namespace CalloutAPI
             };
 
             this.Clues.Add(clue);
-        }        
+        }
 
         /// Receive Tick from the callout manager
         public async Task ReceiveTick()
         {
-            if(Tick != null)
+            if (Tick != null)
                 await Tick.Invoke();
         }
         protected event Func<Task> Tick;
@@ -231,7 +237,7 @@ namespace CalloutAPI
         /// </summary>
         /// <param name="name">The name of the callout (Not the in game dispatch display name)</param>
         /// <param name="probability">Set the probability of the callout (eg. Probability.Low)</param>
-        public CalloutPropertiesAttribute(string name, string author,string version,Callout.Probability probability)
+        public CalloutPropertiesAttribute(string name, string author, string version, Callout.Probability probability)
         {
             this.name = name;
             this.version = version;
