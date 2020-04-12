@@ -6,6 +6,8 @@
 
 Create a new issue here (on GitHub) in the Issues tab with the appropriate label regarding your issue. This way, we can easily manage and solve issues quickly.
 
+**Important**: Do not use `World.GetNextPositionOnStreet()`, because it causes issues.
+
 ### Requesting new features
 
 To request a new feature, either create a **pull request** or create a new **issue** with the **feature request** label.
