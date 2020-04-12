@@ -6,7 +6,7 @@
 
 Create a new issue here (on GitHub) in the Issues tab with the appropriate label regarding your issue. This way, we can easily manage and solve issues quickly.
 
-**Important**: Do not use `World.GetNextPositionOnStreet()`, because it causes issues.
+**Important**: Do not use `World.GetNextPositionOnSidewalk()`, because it causes issues.
 
 ### Requesting new features
 
