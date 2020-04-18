@@ -125,7 +125,7 @@ namespace CalloutAPI
             {
                 var pedHashes = Enum.GetValues(typeof(PedHash));
                 ped = (PedHash)pedHashes.GetValue(rnd.Next(0, pedHashes.Length));
-            } while (ped == default || ped == PedHash.Dolphin || ped == PedHash.KillerWhale || ped == PedHash.Fish || ped == PedHash.HammerShark || ped == PedHash.TigerShark || ped == PedHash.Boar || ped == PedHash.Cat || ped == PedHash.ChickenHawk || ped == PedHash.Chimp || ped == PedHash.Coyote || ped == PedHash.Cow || ped == PedHash.Deer || ped == PedHash.Pig || ped == PedHash.Rabbit || ped == PedHash.Crow || ped == PedHash.Cormorant || ped == PedHash.Husky || ped == PedHash.Rottweiler || ped == PedHash.Pug || ped == PedHash.Poodle || ped == PedHash.Retriever || ped == PedHash.Seagull);
+            } while (ped == default || ped == PedHash.Humpback || ped == PedHash.Dolphin || ped == PedHash.KillerWhale || ped == PedHash.Fish || ped == PedHash.HammerShark || ped == PedHash.TigerShark || ped == PedHash.Boar || ped == PedHash.Cat || ped == PedHash.ChickenHawk || ped == PedHash.Chimp || ped == PedHash.Coyote || ped == PedHash.Cow || ped == PedHash.Deer || ped == PedHash.Pig || ped == PedHash.Rabbit || ped == PedHash.Crow || ped == PedHash.Cormorant || ped == PedHash.Husky || ped == PedHash.Rottweiler || ped == PedHash.Pug || ped == PedHash.Poodle || ped == PedHash.Retriever || ped == PedHash.Seagull);
 
             return ped;
         }
