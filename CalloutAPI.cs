@@ -115,17 +115,45 @@ namespace CalloutAPI
         /// <summary>
         /// Returns a random PedHash, excluding animal Peds.
         /// </summary>
+        
+        private readonly PedHash[] hashes =
+        {
+            default,
+            PedHash.Humpback,
+            PedHash.Dolphin,
+            PedHash.KillerWhale,
+            PedHash.Fish,
+            PedHash.HammerShark,
+            PedHash.TigerShark,
+            PedHash.Boar,
+            PedHash.Cat,
+            PedHash.ChickenHawk,
+            PedHash.Chimp,
+            PedHash.Coyote,
+            PedHash.Cow,
+            PedHash.Deer,
+            PedHash.Pig,
+            PedHash.Rabbit,
+            PedHash.Crow,
+            PedHash.Cormorant,
+            PedHash.Husky,
+            PedHash.Rottweiler,
+            PedHash.Pug,
+            PedHash.Poodle,
+            PedHash.Retriever,
+            PedHash.Seagull,
+            PedHash.Pigeon
+        }
         protected PedHash GetRandomPed()
         {
             PedHash ped;
-
+            var pedHashes = Enum.GetValues(typeof(PedHash));
             Random rnd = new Random();
 
             do
             {
-                var pedHashes = Enum.GetValues(typeof(PedHash));
                 ped = (PedHash)pedHashes.GetValue(rnd.Next(0, pedHashes.Length));
-            } while (ped == default || ped == PedHash.Humpback || ped == PedHash.Dolphin || ped == PedHash.KillerWhale || ped == PedHash.Fish || ped == PedHash.HammerShark || ped == PedHash.TigerShark || ped == PedHash.Boar || ped == PedHash.Cat || ped == PedHash.ChickenHawk || ped == PedHash.Chimp || ped == PedHash.Coyote || ped == PedHash.Cow || ped == PedHash.Deer || ped == PedHash.Pig || ped == PedHash.Rabbit || ped == PedHash.Crow || ped == PedHash.Cormorant || ped == PedHash.Husky || ped == PedHash.Rottweiler || ped == PedHash.Pug || ped == PedHash.Poodle || ped == PedHash.Retriever || ped == PedHash.Seagull);
+            } while (Array.IndexOf(hashes, ped) != -1);
 
             return ped;
         }
