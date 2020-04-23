@@ -115,7 +115,7 @@ namespace CalloutAPI
         /// <summary>
         /// Returns a random PedHash, excluding animal Peds.
         /// </summary>
-        
+
         private readonly PedHash[] hashes =
         {
             default,
@@ -142,8 +142,37 @@ namespace CalloutAPI
             PedHash.Poodle,
             PedHash.Retriever,
             PedHash.Seagull,
-            PedHash.Pigeon
-        }
+            PedHash.Pigeon,
+            PedHash.MountainLion,
+            PedHash.BradCadaverCutscene,
+            PedHash.Chop,
+            PedHash.Hen,
+            PedHash.JohnnyKlebitz,
+            PedHash.LamarDavisCutscene,
+            PedHash.MagentaCutscene,
+            PedHash.Marston01,
+            PedHash.Misty01,
+            PedHash.MovAlien01,
+            PedHash.MoviePremFemaleCutscene,
+            PedHash.MoviePremMaleCutscene,
+            PedHash.MrsPhillipsCutscene,
+            PedHash.MrKCutscene,
+            PedHash.NataliaCutscene,
+            PedHash.NigelCutscene,
+            PedHash.NervousRonCutscene,
+            PedHash.Niko01,
+            PedHash.PaigeCutscene,
+            PedHash.OscarCutscene,
+            PedHash.OrtegaCutscene,
+            PedHash.OrleansCutscene,
+            PedHash.Orleans,
+            PedHash.Pogo01,
+            PedHash.Rat,
+            PedHash.Rhesus,
+            PedHash.Stingray,
+            PedHash.SteveHainsCutscene,
+            PedHash.Westy
+        };
         protected PedHash GetRandomPed()
         {
             PedHash ped;
