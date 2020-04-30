@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Dynamic;
 using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
 
@@ -67,7 +68,7 @@ namespace CalloutAPI
         public bool FixedLocation
         {
             get;
-            private set;
+            protected set;
         }
 
         public float Radius;
@@ -81,6 +82,15 @@ namespace CalloutAPI
             Medium,
             High
         }
+
+       /* public enum DepartmentArea
+        {
+            SANDY_SHORES,
+            LOS_SANTOS,
+            BLAINE_COUNTY,
+            HIGHWAY,
+            PALETO_BAY
+        }*/
 
         /* Gameplay related methods */
 
@@ -249,6 +259,38 @@ namespace CalloutAPI
         /// </summary>
         public Action EndCallout { get; set; }
 
+        /// <summary>
+        /// EndCallout() should be called when you want to terminate or end the callout.<br /><br />
+        /// You should have conditions with your logic when you want to end your callout (Eg. when the player goes to a certain point on the map, ...)<br />
+        /// Calling this method will automatically mark it as a completed callout<br />
+        /// If you don't call this method, the user will have to manually cancel the callout.<br /><br />
+        /// Called methods after calling EndCallout() method:<br />
+        /// - OnCancelBefore()<br />
+        /// - OnCancelAfter()
+        /// </summary>
+
+        public delegate Task<ExpandoObject> GetPedDataDelegate(int NetworkID);
+        public GetPedDataDelegate GetPedData { get; set; }
+
+        public delegate void SetPedDelegate(int NetworkID,ExpandoObject PedData);
+        public SetPedDelegate SetPedData { get; set; }
+
+        /// <summary>
+        /// Call GetPlayerData() if you want to access the PlayerData object.<br /><br />
+        /// The following properties can be accessed in the ExpandoObject:<br />
+        ///      - DisplayName (string) <br />
+        ///      - Callsign (string) <br />
+        ///      - Department (string)  <br />
+        ///      - DepartmentID (int)  <br />
+        ///      - XP (int) 
+        /// </summary>
+        public Func<ExpandoObject> GetPlayerData { get; set; }
+
+        public virtual async Task<bool> CheckRequirements()
+        {
+            return true;
+        }
+        
         /* Experimental below */
         public List<object> Clues;
         /* If a criminal gets X distance away, attach a question mark nearby at every Y secs */
@@ -263,7 +305,7 @@ namespace CalloutAPI
                 minDistance,
                 repeat
             };
-
+            
             this.Clues.Add(clue);
         }
 
