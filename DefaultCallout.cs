@@ -6,7 +6,7 @@ using CalloutAPI;
 
 namespace DefaultCallout
 {
-    [CalloutProperties("DefaultCallout", "1.0", Probability.High)]
+    [CalloutProperties("Trespassing","FivePD", "1.0", Probability.Medium)]
     public class DefaultCallout : CalloutAPI.Callout
     {
 
