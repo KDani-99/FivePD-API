@@ -83,14 +83,34 @@ namespace CalloutAPI
             High
         }
 
-       /* public enum DepartmentArea
+        public enum DepartmentArea
         {
             SANDY_SHORES,
             LOS_SANTOS,
+            LOS_SANTOS_SOUTH,
             BLAINE_COUNTY,
             HIGHWAY,
-            PALETO_BAY
-        }*/
+            PALETO_BAY,
+            PARKS,
+            PORTS,
+            LS_AIRPORT,
+            SEA,
+            FORT_ZANCUDO
+        }
+        public static Dictionary<DepartmentArea, string> DepartmentAreaNames = new Dictionary<DepartmentArea, string>
+        {
+            { DepartmentArea.SANDY_SHORES,"Sandy Shores" },
+            { DepartmentArea.LOS_SANTOS,"Los Santos" },
+            { DepartmentArea.LOS_SANTOS_SOUTH,"South Los Santos" },
+            { DepartmentArea.BLAINE_COUNTY,"Blaine County" },
+            { DepartmentArea.HIGHWAY,"Highway" },
+            { DepartmentArea.PALETO_BAY,"Paleto Bay" },
+            { DepartmentArea.PARKS,"Parks" },
+            { DepartmentArea.PORTS,"Ports" },
+            { DepartmentArea.LS_AIRPORT,"Los Santos International Airport" },
+            { DepartmentArea.SEA,"Sea" },
+            { DepartmentArea.FORT_ZANCUDO,"Fort Zancudo" }
+        };
 
         /* Gameplay related methods */
 
