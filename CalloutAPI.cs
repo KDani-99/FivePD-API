@@ -97,6 +97,7 @@ namespace CalloutAPI
             SEA,
             FORT_ZANCUDO
         }
+
         public static Dictionary<DepartmentArea, string> DepartmentAreaNames = new Dictionary<DepartmentArea, string>
         {
             { DepartmentArea.SANDY_SHORES,"Sandy Shores" },
@@ -114,6 +115,13 @@ namespace CalloutAPI
 
         /* Gameplay related methods */
 
+        /// <summary>
+        /// Spawn a properly networked pedestrian that is also marked as mission entity. Since this method will also load in the model, this call must be awaited.
+        /// </summary>
+        /// <param name="pedHash">The <see cref="PedHash"/> that you want to spawn.</param>
+        /// <param name="location">The location of the ped.</param>
+        /// <param name="heading">Which direction the ped is facing.</param>
+        /// <returns></returns>
         protected async Task<Ped> SpawnPed(PedHash pedHash, Vector3 location, float heading = 0f)
         {
             uint model = (uint)pedHash;
@@ -128,6 +136,14 @@ namespace CalloutAPI
 
             return ped;
         }
+
+        /// <summary>
+        /// Spawn a properly networked vehicle that is also marked as mission entity. Since this method will also load in the model, this call must be awaited.
+        /// </summary>
+        /// <param name="vehicleHash">The <see cref="VehicleHash"/> of the vehicle that you want to spawn.</param>
+        /// <param name="location">The location of the vehicle.</param>
+        /// <param name="heading">Which direction the vehicle is facing.</param>
+        /// <returns>The vehicle you spawned</returns>
         protected async Task<Vehicle> SpawnVehicle(VehicleHash vehicleHash, Vector3 location, float heading = 0f)
         {
             uint model = (uint)vehicleHash;
@@ -142,10 +158,10 @@ namespace CalloutAPI
 
             return vehicle;
         }
+
         /// <summary>
         /// Returns a random PedHash, excluding animal Peds.
         /// </summary>
-
         private readonly PedHash[] hashes =
         {
             default,
@@ -203,6 +219,11 @@ namespace CalloutAPI
             PedHash.SteveHainsCutscene,
             PedHash.Westy
         };
+
+        /// <summary>
+        /// Select a random <see cref="PedHash"/>.
+        /// </summary>
+        /// <returns></returns>
         protected PedHash GetRandomPed()
         {
             PedHash ped;
@@ -212,11 +233,16 @@ namespace CalloutAPI
             do
             {
                 ped = (PedHash)pedHashes.GetValue(rnd.Next(0, pedHashes.Length));
-            } while (Array.IndexOf(hashes, ped) != -1);
+            }
+            while (Array.IndexOf(hashes, ped) != -1);
 
             return ped;
         }
 
+        /// <summary>
+        /// Initialize callout information. Call this in your callout constructor.
+        /// </summary>
+        /// <param name="location">The location for your callout.</param>
         protected void InitBase(Vector3 location)
         {
             this.AssignedPlayers = new List<Ped>();
@@ -228,6 +254,7 @@ namespace CalloutAPI
             this.Identifier = Guid.NewGuid().ToString();
             this.FixedLocation = false;
         }
+
         /// <summary>
         /// OnAccept will be called when the player accepts the call.
         /// You must call base.OnAccept(args) to initialise the default properties
@@ -241,6 +268,7 @@ namespace CalloutAPI
             this.Marker.Color = color;
             this.Marker.Alpha = alpha;
         }
+
         /// <summary>
         /// Init() will be automatically invoked by the CalloutManager<br/>
         /// Define game logic here (eg. Spawn suspects,victims,vehicles)
@@ -250,8 +278,8 @@ namespace CalloutAPI
         /// <summary>
         /// (Do not call it)<br/><br/>
         /// Destructs every spawned object automatically if defined as a field or property (can be public, private, protected and static)<br/>
-        /// To spawn something, defined it as a property or field, otherwise you'll manually have to delete it locally
-        /// See the documentation
+        /// To spawn something, define it as a property or field, otherwise you'll manually have to delete it locally.<br />
+        /// See the documentation.
         /// </summary>
         #region Events
         public virtual void OnStart(Ped closest)
@@ -262,11 +290,34 @@ namespace CalloutAPI
                 this.AssignedPlayers.Add(closest);
             }
         }
+
+        /// <summary>
+        /// Called when backup is requested through the Callout menu.
+        /// </summary>
+        /// <param name="code">The code of the backup. Either 1, 2, 3 or 99.</param>
         public virtual void OnBackupCalled(int code) { } // 1,2,3,99
-        public virtual void OnBackupReceived(Player player) { } // New player
-        public virtual void OnPlayerRevokedBackup(Player player) { } // Called when someone stops respoding to the caller
-        public virtual void OnCancelBefore() { } // Called before Destruct()
-        public virtual void OnCancelAfter() { } // Called after Destruct()
+
+        /// <summary>
+        /// Called when a player has accepted the backup request and is added to the call.
+        /// </summary>
+        /// <param name="player">The player that was added to the call.</param>
+        public virtual void OnBackupReceived(Player player) { }
+
+        /// <summary>
+        /// Called when a player that was on the call has canceled the assistance (left the call).
+        /// </summary>
+        /// <param name="player">The player that has left the call.</param>
+        public virtual void OnPlayerRevokedBackup(Player player) { }
+
+        /// <summary>
+        /// Called before the callout is cleaned up (before Destruct()).
+        /// </summary>
+        public virtual void OnCancelBefore() { }
+
+        /// <summary>
+        /// Called after the callout is cleaned up.
+        /// </summary>
+        public virtual void OnCancelAfter() { }
 
         /// <summary>
         /// EndCallout() should be called when you want to terminate or end the callout.<br /><br />
@@ -280,19 +331,56 @@ namespace CalloutAPI
         public Action EndCallout { get; set; }
 
         /// <summary>
-        /// EndCallout() should be called when you want to terminate or end the callout.<br /><br />
-        /// You should have conditions with your logic when you want to end your callout (Eg. when the player goes to a certain point on the map, ...)<br />
-        /// Calling this method will automatically mark it as a completed callout<br />
-        /// If you don't call this method, the user will have to manually cancel the callout.<br /><br />
-        /// Called methods after calling EndCallout() method:<br />
-        /// - OnCancelBefore()<br />
-        /// - OnCancelAfter()
+        /// Retrieve internal FivePD information about a specific pedestrian.<br />
+        /// The following properties can be accessed:<br />
+        /// 	- Firstname (string) <br />
+        /// 	- Lastname (string) <br />
+        /// 	- Warrant (string) <br />
+        /// 	- License (string) <br />
+        /// 	- DOB (string) -> format: <c>mm/dd/yyyy</c><br />
+        /// 	- AlcoholLevel (double) <br /> 
+        /// 	- DrugsUsed (bool []) -> 0 = Meth, 1 = Cocaine, 2 = Marijuana<br />
+        /// 	- Gender (string) <br />
+        /// 	- Age (int) <br />
+        /// 	- Address (string) <br />
+        /// 	- Items (List&lt;dynamic&gt;) <br />
+        /// 	- Violations (List&lt;dynamic&gt;)
+        /// <example>
+        /// <code>dynamic myData = await GetPedData(myPed.NetworkId);</code>
+        /// </example>
         /// </summary>
-
+        /// <param name="NetworkID">The network ID of the pedestrian that you're trying to get the data from.</param>
+        /// <returns></returns>
         public delegate Task<ExpandoObject> GetPedDataDelegate(int NetworkID);
+
+
         public GetPedDataDelegate GetPedData { get; set; }
 
-        public delegate void SetPedDelegate(int NetworkID,ExpandoObject PedData);
+        /// <summary>
+        /// Set information for a specific pedestrian.
+        /// The following properties can be set in the <c>PedData</c>:<br />
+        ///     - firstname (string)<br />
+        ///     - lastname (string)<br />
+        ///     - alcoholLevel (double)<br />
+        ///     - drugsUsed (bool[]) -> 0 = Meth, 1 = Cocaine, 2 = Marijuana<br />
+        ///     - items (List&lt;object&gt;)
+        /// <example>
+        /// <code>
+        /// dynamic myData = new ExpandoObject();<br />
+        /// myData.firstname = "John";<br />
+        /// myData.lastname = "Doe";<br />
+        /// myData.alcoholLevel = 0.20;<br />
+        /// myData.drugsUsed = new bool[] { false, false, true }; // High on marijuana<br />
+        /// myData.items = new List&lt;object&gt; { new { Name = "knife", IsIllegal = true } }; <br />
+        /// SetPedDelegate(myPed.NetworkId, myData);
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="NetworkID">The network id of the pedestrian.</param>
+        /// <param name="PedData">The dynamic object with the values to set. The values are case sensitive.</param>
+        /// <seealso cref="GetPedDataDelegate"/>
+        public delegate void SetPedDelegate(int NetworkID, ExpandoObject PedData);
+
         public SetPedDelegate SetPedData { get; set; }
 
         /// <summary>
@@ -306,11 +394,22 @@ namespace CalloutAPI
         /// </summary>
         public Func<ExpandoObject> GetPlayerData { get; set; }
 
+        /// <summary>
+        /// This method allows you to influence whether this callout is currently allowed to initialize or not.
+        /// Return <c>true</c> to enable the callout, <c>false</c> to disable.<br /><br />
+        /// <example>
+        /// In the following example, the callout will only appear during the night (from midnight to 6AM).
+        /// <code>
+        /// public override Task&lt;bool&gt; CheckRequirements() => Task.FromResult(World.CurrentDateTime &lt;= TimeSpan.FromHours(6));
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <returns>True to enable, false to disable.</returns>
         public virtual async Task<bool> CheckRequirements()
         {
             return true;
         }
-        
+
         /* Experimental below */
         public List<object> Clues;
         /* If a criminal gets X distance away, attach a question mark nearby at every Y secs */
@@ -325,20 +424,49 @@ namespace CalloutAPI
                 minDistance,
                 repeat
             };
-            
+
             this.Clues.Add(clue);
         }
 
-        /// Receive Tick from the callout manager
+        /// <summary>
+        /// Receive Tick from the callout manager.
+        /// To subscribe to ticks, please use the <see cref="Tick"/> event.
+        /// </summary>
+        /// <returns></returns>
+        /// <seealso cref="Tick"/>
         public async Task ReceiveTick()
         {
             if (Tick != null)
                 await Tick.Invoke();
         }
+
+        /// <summary>
+        /// Subscribe to the tick event to process callout logic.
+        /// <example>
+        /// In order to subscribe to the event, register an event handler:
+        /// <code>
+        /// public override void OnStart(Ped closest)
+        /// {
+        ///     Tick += OnTick;
+        /// }
+        /// </code>
+        /// Then, define your event handler. In this event handler you can write your logic.
+        /// <code>
+        /// public async Task OnTick()
+        /// {
+        ///     Debug.WriteLine("A tick!");
+        ///     
+        ///     await BaseScript.Delay(1500);
+        /// }
+        /// </code>
+        /// In this example you would see "A tick!" appearing in the console (F8) every 1,5 seconds. Make sure to call BaseScript.Delay!
+        /// </example>
+        /// </summary>
         protected event Func<Task> Tick;
 
         #endregion
     }
+
     /// <summary>
     /// Bundles callout properties (CalloutPropertiesAttribute is used in the CalloutManager)
     /// </summary>
@@ -347,7 +475,15 @@ namespace CalloutAPI
         /// <summary>The name of the callout(Not the in game dispatch display name)</summary>
         public string name { get; private set; }
         public string author { get; private set; }
+
+        /// <summary>
+        /// The version of the callout.
+        /// <example>
+        /// For example: <c>1.2.3</c>
+        /// </example>
+        /// </summary>
         public string version { get; private set; }
+
         /// <summary>The probability of the callout which can be: Probability.Low - Probability.Medium - Probability.High</summary>
         public Callout.Probability probability { get; private set; }
 
