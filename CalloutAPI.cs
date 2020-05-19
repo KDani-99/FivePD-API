@@ -160,84 +160,12 @@ namespace CalloutAPI
         }
 
         /// <summary>
-        /// Returns a random PedHash, excluding animal Peds.
-        /// </summary>
-        private readonly PedHash[] hashes =
-        {
-            default,
-            PedHash.Humpback,
-            PedHash.Dolphin,
-            PedHash.KillerWhale,
-            PedHash.Fish,
-            PedHash.HammerShark,
-            PedHash.TigerShark,
-            PedHash.Boar,
-            PedHash.Cat,
-            PedHash.ChickenHawk,
-            PedHash.Chimp,
-            PedHash.Coyote,
-            PedHash.Cow,
-            PedHash.Deer,
-            PedHash.Pig,
-            PedHash.Rabbit,
-            PedHash.Crow,
-            PedHash.Cormorant,
-            PedHash.Husky,
-            PedHash.Rottweiler,
-            PedHash.Pug,
-            PedHash.Poodle,
-            PedHash.Retriever,
-            PedHash.Seagull,
-            PedHash.Pigeon,
-            PedHash.MountainLion,
-            PedHash.BradCadaverCutscene,
-            PedHash.Chop,
-            PedHash.Hen,
-            PedHash.JohnnyKlebitz,
-            PedHash.LamarDavisCutscene,
-            PedHash.MagentaCutscene,
-            PedHash.Marston01,
-            PedHash.Misty01,
-            PedHash.MovAlien01,
-            PedHash.MoviePremFemaleCutscene,
-            PedHash.MoviePremMaleCutscene,
-            PedHash.MrsPhillipsCutscene,
-            PedHash.MrKCutscene,
-            PedHash.NataliaCutscene,
-            PedHash.NigelCutscene,
-            PedHash.NervousRonCutscene,
-            PedHash.Niko01,
-            PedHash.PaigeCutscene,
-            PedHash.OscarCutscene,
-            PedHash.OrtegaCutscene,
-            PedHash.OrleansCutscene,
-            PedHash.Orleans,
-            PedHash.Pogo01,
-            PedHash.Rat,
-            PedHash.Rhesus,
-            PedHash.Stingray,
-            PedHash.SteveHainsCutscene,
-            PedHash.Westy
-        };
-
-        /// <summary>
-        /// Select a random <see cref="PedHash"/>.
+        /// DO NOT USE. Only here for backwards compatibility with callouts that use the older API.<br /><br />
+        /// See <see cref="CalloutUtils.GetRandomPed"/> for the alternative implementations.
         /// </summary>
         /// <returns></returns>
-        protected PedHash GetRandomPed()
-        {
-            PedHash ped;
-            var pedHashes = Enum.GetValues(typeof(PedHash));
-            Random rnd = new Random();
-
-            do
-            {
-                ped = (PedHash)pedHashes.GetValue(rnd.Next(0, pedHashes.Length));
-            }
-            while (Array.IndexOf(hashes, ped) != -1);
-
-            return ped;
-        }
+        [Obsolete("This method has been moved to the CalloutUtils class.", true)]
+        protected PedHash GetRandomPed() => CalloutUtils.GetRandomPed();
 
         /// <summary>
         /// Initialize callout information. Call this in your callout constructor.
