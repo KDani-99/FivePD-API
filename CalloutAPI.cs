@@ -8,6 +8,9 @@ using static CitizenFX.Core.Native.API;
 namespace CalloutAPI
 {
     /* This class is referenced in the main plugin to call the CalloutAPI's `LoadCallouts` method */
+    /// <summary>
+    /// Implement this abstract class to make your own callout. This class defines the main callout structure as well as some basic helper methods.
+    /// </summary>
     public abstract class Callout
     {
         /// <summary>
@@ -295,7 +298,7 @@ namespace CalloutAPI
         /// Called when backup is requested through the Callout menu.
         /// </summary>
         /// <param name="code">The code of the backup. Either 1, 2, 3 or 99.</param>
-        public virtual void OnBackupCalled(int code) { } // 1,2,3,99
+        public virtual void OnBackupCalled(int code) { }
 
         /// <summary>
         /// Called when a player has accepted the backup request and is added to the call.
@@ -331,7 +334,9 @@ namespace CalloutAPI
         public Action EndCallout { get; set; }
 
         /// <summary>
-        /// Retrieve internal FivePD information about a specific pedestrian.<br />
+        /// Retrieve internal FivePD information about a specific pedestrian.
+        /// Please note that you cannot call this method in the constructor of your callout. 
+        /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods.<br /><br />
         /// The following properties can be accessed:<br />
         /// 	- Firstname (string) <br />
         /// 	- Lastname (string) <br />
@@ -358,6 +363,8 @@ namespace CalloutAPI
 
         /// <summary>
         /// Set information for a specific pedestrian.
+        /// Please note that you cannot call this method in the constructor of your callout. 
+        /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods.<br /><br />
         /// The following properties can be set in the <c>PedData</c>:<br />
         ///     - firstname (string)<br />
         ///     - lastname (string)<br />
@@ -384,13 +391,15 @@ namespace CalloutAPI
         public SetPedDelegate SetPedData { get; set; }
 
         /// <summary>
-        /// Call GetPlayerData() if you want to access the PlayerData object.<br /><br />
+        /// Call GetPlayerData() if you want to access the PlayerData object. 
+        /// Please note that you cannot call this method in the constructor of your callout. 
+        /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods.<br /><br />
         /// The following properties can be accessed in the ExpandoObject:<br />
         ///      - DisplayName (string) <br />
         ///      - Callsign (string) <br />
         ///      - Department (string)  <br />
         ///      - DepartmentID (int)  <br />
-        ///      - XP (int) 
+        ///      - XP (int)
         /// </summary>
         public Func<ExpandoObject> GetPlayerData { get; set; }
 
@@ -472,7 +481,7 @@ namespace CalloutAPI
     /// </summary>
     public class CalloutPropertiesAttribute : Attribute
     {
-        /// <summary>The name of the callout(Not the in game dispatch display name)</summary>
+        /// <summary>The name of the callout as shown in the Debug menu and in the console (See <see cref="Callout.ShortName"/> for the dispatch name)</summary>
         public string name { get; private set; }
         public string author { get; private set; }
 
@@ -484,14 +493,15 @@ namespace CalloutAPI
         /// </summary>
         public string version { get; private set; }
 
-        /// <summary>The probability of the callout which can be: Probability.Low - Probability.Medium - Probability.High</summary>
+        /// <summary>The probability of the callout which can be: <c>Probability.Low</c> - <c>Probability.Medium</c> - <c>Probability.High</c></summary>
         public Callout.Probability probability { get; private set; }
 
         /// <summary>
         /// Callout properties
         /// </summary>
-        /// <param name="name">The name of the callout (Not the in game dispatch display name)</param>
-        /// <param name="probability">Set the probability of the callout (eg. Probability.Low)</param>
+        /// <param name="name">The name of the callout as shown in the Debug menu and in the console (See <see cref="Callout.ShortName"/> for the dispatch name)</param>
+        /// <param name="version">The version of the callout. <example>For example: <c>1.2.3</c></example></param>
+        /// <param name="probability">Set the probability of the callout (eg. <c>Probability.Low</c>). With the probility you can configure how often the call will be created.</param>
         public CalloutPropertiesAttribute(string name, string author, string version, Callout.Probability probability)
         {
             this.name = name;
