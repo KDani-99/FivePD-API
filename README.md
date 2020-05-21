@@ -28,9 +28,10 @@ csc -target:library CalloutName.cs -reference:CalloutAPI.net.dll -reference:Citi
 ##### From scratch in Visual Studio
 1. Create a new C# Class Library project and make sure the target framework version is 4.5.2.
 2. Go to Project > <ProjectName> Properties > Change the assembly name to <ProjectName>.net
-2. Add CalloutAPI.dll as a reference.
-3. Add CitizenFX.Core.dll as a reference.
-4. Derive Callout class
+3. Add CalloutAPI.dll from the FivePD download as a reference.
+4. Add CitizenFX.Core.dll from your FiveM client as a reference. (`<client-root>\citizen\clr2\lib\mono\4.5\CitizenFX.Core.dll`)
+5. Derive Callout class
+
 (For detailed instructions on how to create your first FiveM script, [click here](https://docs.fivem.net/docs/scripting-manual/runtimes/csharp/ "refer here"))
 
 For documentation, [visit the "wiki" tab](https://github.com/KDani-99/FivePD-API/wiki).
