@@ -276,7 +276,9 @@ namespace CalloutAPI
         /// Init() will be automatically invoked by the CalloutManager<br/>
         /// Define game logic here (eg. Spawn suspects,victims,vehicles)
         /// </summary>
-        public virtual async Task OnAccept() { }
+        public virtual async Task OnAccept() {
+            InitBlip();
+        }
 
         /// <summary>
         /// (Do not call it)<br/><br/>
@@ -292,8 +294,6 @@ namespace CalloutAPI
             {
                 this.AssignedPlayers.Add(closest);
             }
-
-            InitBlip();
         }
 
         /// <summary>
