@@ -246,7 +246,7 @@ namespace CalloutAPI
         /// Initialize callout information. Call this in your callout constructor.
         /// </summary>
         /// <param name="location">The location for your callout.</param>
-        protected void InitBase(Vector3 location)
+        protected void InitInfo(Vector3 location)
         {
             this.AssignedPlayers = new List<Ped>();
             this.AssignedPlayers.Add(Game.PlayerPed);
@@ -276,7 +276,7 @@ namespace CalloutAPI
         /// Init() will be automatically invoked by the CalloutManager<br/>
         /// Define game logic here (eg. Spawn suspects,victims,vehicles)
         /// </summary>
-        public virtual async Task Init() { }
+        public virtual async Task OnAccept() { }
 
         /// <summary>
         /// (Do not call it)<br/><br/>
