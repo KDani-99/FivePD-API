@@ -259,17 +259,17 @@ namespace CalloutAPI
         }
 
         /// <summary>
-        /// OnAccept will be called when the player accepts the call.
-        /// You must call base.OnAccept(args) to initialise the default properties
+        /// Sets up the blip with the <see cref="Location"/>'s area
+        /// Override if you need a custom blip
         /// </summary>
-        protected void OnAccept(float circleRadius = 75f, BlipColor color = BlipColor.Yellow, BlipSprite sprite = BlipSprite.BigCircle, int alpha = 100)
+        protected void InitBlip() 
         {
-            int blipHandle = AddBlipForRadius(this.Location.X, this.Location.Y, this.Location.Z, circleRadius);
-            this.Radius = circleRadius;
+            int blipHandle = AddBlipForRadius(this.Location.X, this.Location.Y, this.Location.Z, 75f);
+            this.Radius = 75f;
             this.Marker = new Blip(blipHandle);
-            this.Marker.Sprite = sprite;
-            this.Marker.Color = color;
-            this.Marker.Alpha = alpha;
+            this.Marker.Sprite = BlipSprite.BigCircle;
+            this.Marker.Color = BlipColor.Yellow;
+            this.Marker.Alpha = 100;
         }
 
         /// <summary>
@@ -292,6 +292,8 @@ namespace CalloutAPI
             {
                 this.AssignedPlayers.Add(closest);
             }
+
+            InitBlip();
         }
 
         /// <summary>
