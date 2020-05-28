@@ -6,7 +6,7 @@
 
 Create a new issue here (on GitHub) in the Issues tab with the appropriate label regarding your issue. This way, we can easily manage and solve issues quickly.
 
-**Important**: Do not use `World.GetNextPositionOnSidewalk()`, because it causes issues.
+**Important issue**: `World.GetNextPositionOnSidewalk()` FiveM Source code sets that to Vector3.Zero if it couldn't find a good position around the area you specified (works within like 20-30ft of the player). ([**Source**](https://github.com/citizenfx/fivem/blob/master/code/client/clrcore/External/World.cs#L1189))
 
 ### Requesting new features
 
