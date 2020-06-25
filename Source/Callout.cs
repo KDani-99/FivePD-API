@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Dynamic;
 using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
 
-namespace CalloutAPI
+namespace FivePD.API
 {
     /* This class is referenced in the main plugin to call the CalloutAPI's `LoadCallouts` method */
     /// <summary>
@@ -76,45 +76,6 @@ namespace CalloutAPI
 
         public float Radius;
         public Callout() { }
-        /// <summary>
-        /// Probability (Low-Medium-High)
-        /// </summary>
-        public enum Probability
-        {
-            Low,
-            Medium,
-            High
-        }
-
-        public enum DepartmentArea
-        {
-            SANDY_SHORES,
-            LOS_SANTOS,
-            LOS_SANTOS_SOUTH,
-            BLAINE_COUNTY,
-            HIGHWAY,
-            PALETO_BAY,
-            PARKS,
-            PORTS,
-            LS_AIRPORT,
-            SEA,
-            FORT_ZANCUDO
-        }
-
-        public static Dictionary<DepartmentArea, string> DepartmentAreaNames = new Dictionary<DepartmentArea, string>
-        {
-            { DepartmentArea.SANDY_SHORES,"Sandy Shores" },
-            { DepartmentArea.LOS_SANTOS,"Los Santos" },
-            { DepartmentArea.LOS_SANTOS_SOUTH,"South Los Santos" },
-            { DepartmentArea.BLAINE_COUNTY,"Blaine County" },
-            { DepartmentArea.HIGHWAY,"Highway" },
-            { DepartmentArea.PALETO_BAY,"Paleto Bay" },
-            { DepartmentArea.PARKS,"Parks" },
-            { DepartmentArea.PORTS,"Ports" },
-            { DepartmentArea.LS_AIRPORT,"Los Santos International Airport" },
-            { DepartmentArea.SEA,"Sea" },
-            { DepartmentArea.FORT_ZANCUDO,"Fort Zancudo" }
-        };
 
         /* Gameplay related methods */
 
@@ -158,7 +119,7 @@ namespace CalloutAPI
 
             Vehicle vehicle = (Vehicle)Entity.FromHandle(CreateVehicle(model, location.X, location.Y, location.Z, heading, true, true));
             SetEntityAsMissionEntity(vehicle.Handle, true, true);
-
+            
             return vehicle;
         }
 
@@ -246,7 +207,7 @@ namespace CalloutAPI
         /// Initialize callout information. Call this in your callout constructor.
         /// </summary>
         /// <param name="location">The location for your callout.</param>
-        protected void InitBase(Vector3 location)
+        protected void InitInfo(Vector3 location)
         {
             this.AssignedPlayers = new List<Ped>();
             this.AssignedPlayers.Add(Game.PlayerPed);
@@ -262,7 +223,7 @@ namespace CalloutAPI
         /// OnAccept will be called when the player accepts the call.
         /// You must call base.OnAccept(args) to initialise the default properties
         /// </summary>
-        protected void OnAccept(float circleRadius = 75f, BlipColor color = BlipColor.Yellow, BlipSprite sprite = BlipSprite.BigCircle, int alpha = 100)
+        protected void InitBlip(float circleRadius = 75f, BlipColor color = BlipColor.Yellow, BlipSprite sprite = BlipSprite.BigCircle, int alpha = 100)
         {
             int blipHandle = AddBlipForRadius(this.Location.X, this.Location.Y, this.Location.Z, circleRadius);
             this.Radius = circleRadius;
@@ -273,10 +234,10 @@ namespace CalloutAPI
         }
 
         /// <summary>
-        /// Init() will be automatically invoked by the CalloutManager<br/>
+        /// OnAccept() will be automatically invoked by the CalloutManager<br/>
         /// Define game logic here (eg. Spawn suspects,victims,vehicles)
         /// </summary>
-        public virtual async Task Init() { }
+        public virtual async Task OnAccept() { }
 
         /// <summary>
         /// (Do not call it)<br/><br/>
@@ -333,75 +294,14 @@ namespace CalloutAPI
         /// </summary>
         public Action EndCallout { get; set; }
 
-        /// <summary>
-        /// Retrieve internal FivePD information about a specific pedestrian.
-        /// Please note that you cannot call this method in the constructor of your callout. 
-        /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods.<br /><br />
-        /// The following properties can be accessed:<br />
-        /// 	- Firstname (string) <br />
-        /// 	- Lastname (string) <br />
-        /// 	- Warrant (string) <br />
-        /// 	- License (string) <br />
-        /// 	- DOB (string) -> format: <c>mm/dd/yyyy</c><br />
-        /// 	- AlcoholLevel (double) <br /> 
-        /// 	- DrugsUsed (bool []) -> 0 = Meth, 1 = Cocaine, 2 = Marijuana<br />
-        /// 	- Gender (string) <br />
-        /// 	- Age (int) <br />
-        /// 	- Address (string) <br />
-        /// 	- Items (List&lt;dynamic&gt;) <br />
-        /// 	- Violations (List&lt;dynamic&gt;)
-        /// <example>
-        /// <code>dynamic myData = await GetPedData(myPed.NetworkId);</code>
-        /// </example>
-        /// </summary>
-        /// <param name="NetworkID">The network ID of the pedestrian that you're trying to get the data from.</param>
-        /// <returns></returns>
-        public delegate Task<ExpandoObject> GetPedDataDelegate(int NetworkID);
+        public delegate void ShowDialogDelegate(string text, int duration ,float showRadius);
+        public ShowDialogDelegate ShowDialog { get; set; }
 
+        public delegate void ShowNotificationDelegate(string text, string textureDict, string textureName, string sender, string subject, float showRadius);
+        public ShowNotificationDelegate ShowNetworkedNotification { get; set; }
 
-        public GetPedDataDelegate GetPedData { get; set; }
-
-        /// <summary>
-        /// Set information for a specific pedestrian.
-        /// Please note that you cannot call this method in the constructor of your callout. 
-        /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods.<br /><br />
-        /// The following properties can be set in the <c>PedData</c>:<br />
-        ///     - firstname (string)<br />
-        ///     - lastname (string)<br />
-        ///     - alcoholLevel (double)<br />
-        ///     - drugsUsed (bool[]) -> 0 = Meth, 1 = Cocaine, 2 = Marijuana<br />
-        ///     - items (List&lt;object&gt;)
-        /// <example>
-        /// <code>
-        /// dynamic myData = new ExpandoObject();<br />
-        /// myData.firstname = "John";<br />
-        /// myData.lastname = "Doe";<br />
-        /// myData.alcoholLevel = 0.20;<br />
-        /// myData.drugsUsed = new bool[] { false, false, true }; // High on marijuana<br />
-        /// myData.items = new List&lt;object&gt; { new { Name = "knife", IsIllegal = true } }; <br />
-        /// SetPedDelegate(myPed.NetworkId, myData);
-        /// </code>
-        /// </example>
-        /// </summary>
-        /// <param name="NetworkID">The network id of the pedestrian.</param>
-        /// <param name="PedData">The dynamic object with the values to set. The values are case sensitive.</param>
-        /// <seealso cref="GetPedDataDelegate"/>
-        public delegate void SetPedDelegate(int NetworkID, ExpandoObject PedData);
-
-        public SetPedDelegate SetPedData { get; set; }
-
-        /// <summary>
-        /// Call GetPlayerData() if you want to access the PlayerData object. 
-        /// Please note that you cannot call this method in the constructor of your callout. 
-        /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods.<br /><br />
-        /// The following properties can be accessed in the ExpandoObject:<br />
-        ///      - DisplayName (string) <br />
-        ///      - Callsign (string) <br />
-        ///      - Department (string)  <br />
-        ///      - DepartmentID (int)  <br />
-        ///      - XP (int)
-        /// </summary>
-        public Func<ExpandoObject> GetPlayerData { get; set; }
+        public delegate void UpdateDataDelegate(string location = null);
+        public UpdateDataDelegate UpdateData { get; set; }
 
         /// <summary>
         /// This method allows you to influence whether this callout is currently allowed to initialize or not.
@@ -433,7 +333,6 @@ namespace CalloutAPI
                 minDistance,
                 repeat
             };
-
             this.Clues.Add(clue);
         }
 
@@ -493,20 +392,15 @@ namespace CalloutAPI
         /// </summary>
         public string version { get; private set; }
 
-        /// <summary>The probability of the callout which can be: <c>Probability.Low</c> - <c>Probability.Medium</c> - <c>Probability.High</c></summary>
-        public Callout.Probability probability { get; private set; }
-
         /// <summary>
         /// Callout properties
         /// </summary>
         /// <param name="name">The name of the callout as shown in the Debug menu and in the console (See <see cref="Callout.ShortName"/> for the dispatch name)</param>
         /// <param name="version">The version of the callout. <example>For example: <c>1.2.3</c></example></param>
-        /// <param name="probability">Set the probability of the callout (eg. <c>Probability.Low</c>). With the probility you can configure how often the call will be created.</param>
-        public CalloutPropertiesAttribute(string name, string author, string version, Callout.Probability probability)
+        public CalloutPropertiesAttribute(string name, string author, string version)
         {
             this.name = name;
             this.version = version;
-            this.probability = probability;
             this.author = author;
         }
     }
