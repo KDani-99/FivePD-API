@@ -35,9 +35,3 @@ csc -target:library CalloutName.cs -reference:CalloutAPI.net.dll -reference:Citi
 (For detailed instructions on how to create your first FiveM script, [click here](https://docs.fivem.net/docs/scripting-manual/runtimes/csharp/ "refer here"))
 
 For documentation, [visit the "wiki" tab](https://github.com/KDani-99/FivePD-API/wiki).
-
-[Fields and properties](https://github.com/KDani-99/FivePD-API/wiki/Fields-and-Properties)
-
-[Methods and events](https://github.com/KDani-99/FivePD-API/wiki/Methods-and-Events)
-
-[CalloutPropertiesAttribute](https://github.com/KDani-99/FivePD-API/wiki/CalloutPropertiesAttribute)
