@@ -35,3 +35,8 @@ csc -target:library CalloutName.cs -reference:CalloutAPI.net.dll -reference:Citi
 (For detailed instructions on how to create your first FiveM script, [click here](https://docs.fivem.net/docs/scripting-manual/runtimes/csharp/ "refer here"))
 
 For documentation, [visit the "wiki" tab](https://github.com/KDani-99/FivePD-API/wiki).
+
+### Additional Support/Resources
+We have an Offical FivePD API Discord Server which you can visit [HERE](https://discord.gg/tHZ4Yqc).
+
+If you wish to view videos on creating callouts using this API you can find a playlist of videos [HERE](https://www.youtube.com/playlist?list=PL3m-r_SUQzQyEcMn__cyQSTNoegN7RNbS).
