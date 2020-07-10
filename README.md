@@ -36,8 +36,7 @@ csc -target:library CalloutName.cs -reference:CalloutAPI.net.dll -reference:Citi
 
 For documentation, [visit the "wiki" tab](https://github.com/KDani-99/FivePD-API/wiki).
 
-[Fields and properties](https://github.com/KDani-99/FivePD-API/wiki/Fields-and-Properties)
+### Additional Support/Resources
+We have an Offical FivePD API Discord Server which you can visit [HERE](https://discord.gg/tHZ4Yqc).
 
-[Methods and events](https://github.com/KDani-99/FivePD-API/wiki/Methods-and-Events)
-
-[CalloutPropertiesAttribute](https://github.com/KDani-99/FivePD-API/wiki/CalloutPropertiesAttribute)
+If you wish to view videos on creating callouts using this API you can find a playlist of videos [HERE](https://www.youtube.com/playlist?list=PL3m-r_SUQzQyEcMn__cyQSTNoegN7RNbS).
