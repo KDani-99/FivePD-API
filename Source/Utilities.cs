@@ -6,7 +6,7 @@ using CitizenFX.Core;
 
 namespace FivePD.API
 {
-    public abstract class Utilities
+    public static class Utilities
     {
         public enum Services
         {
@@ -42,7 +42,7 @@ namespace FivePD.API
         public delegate Task<ExpandoObject> GetVehicleDataDelegate(int networkID);
         public static GetVehicleDataDelegate GetVehicleData;
 
-        public delegate void SetVehicleDataDelegate(int vehicle,ExpandoObject data);
+        public delegate void SetVehicleDataDelegate(int vehicle, ExpandoObject data);
         public static SetVehicleDataDelegate SetVehicleData;
 
         public delegate void ExcludeVehicleFromTrafficStopDelegate(int networkID, bool exclude);
@@ -50,13 +50,18 @@ namespace FivePD.API
         #endregion
 
         #region Services
-        public delegate void RequestServiceDelegate(Services service,Vector3 position);
+        public delegate void RequestServiceDelegate(Services service);
         /// <summary>
         /// Requests a service to a given position.
         /// </summary>
         public static RequestServiceDelegate RequestService;
+        public delegate void CancelServiceDelegate(Services service);
+        /// <summary>
+        /// Cancels the last requested service (by service type).
+        /// </summary>
+        public static CancelServiceDelegate CancelService;
         #endregion
-        
+
         #region Ped
         public delegate Task<ExpandoObject> GetPedDataDelegate(int NetworkID);
         /// <summary>
@@ -124,6 +129,12 @@ namespace FivePD.API
         ///      - XP (int)
         /// </summary>
         public static Func<ExpandoObject> GetPlayerData;
+
+        public delegate bool IsPlayerOnDutyDelegate();
+        public static IsPlayerOnDutyDelegate IsPlayerOnDuty;
+
+        public delegate void SetPlayerDutyDelegate(bool onDuty);
+        public static SetPlayerDutyDelegate SetPlayerDuty;
 
         /// <summary>
         /// Returns the closest ped.
