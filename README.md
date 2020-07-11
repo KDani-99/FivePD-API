@@ -6,7 +6,7 @@
 
 Create a new issue here (on GitHub) in the Issues tab with the appropriate label regarding your issue. This way, we can easily manage and solve issues quickly.
 
-**Important**: Do not use `World.GetNextPositionOnSidewalk()`, because it causes issues.
+**Important issue**: `World.GetNextPositionOnSidewalk()` FiveM Source code sets that to Vector3.Zero if it couldn't find a good position around the area you specified (works within like 20-30ft of the player). ([**Source**](https://github.com/citizenfx/fivem/blob/master/code/client/clrcore/External/World.cs#L1189))
 
 ### Requesting new features
 
@@ -28,15 +28,15 @@ csc -target:library CalloutName.cs -reference:CalloutAPI.net.dll -reference:Citi
 ##### From scratch in Visual Studio
 1. Create a new C# Class Library project and make sure the target framework version is 4.5.2.
 2. Go to Project > <ProjectName> Properties > Change the assembly name to <ProjectName>.net
-2. Add CalloutAPI.dll as a reference.
-3. Add CitizenFX.Core.dll as a reference.
-4. Derive Callout class
+3. Add CalloutAPI.dll from the FivePD download as a reference.
+4. Add CitizenFX.Core.dll from your FiveM client as a reference. (`<client-root>\citizen\clr2\lib\mono\4.5\CitizenFX.Core.dll`)
+5. Derive Callout class
+
 (For detailed instructions on how to create your first FiveM script, [click here](https://docs.fivem.net/docs/scripting-manual/runtimes/csharp/ "refer here"))
 
 For documentation, [visit the "wiki" tab](https://github.com/KDani-99/FivePD-API/wiki).
 
-[Fields and properties](https://github.com/KDani-99/FivePD-API/wiki/Fields-and-Properties)
+### Additional Support/Resources
+We have an Offical FivePD API Discord Server which you can visit [HERE](https://discord.gg/tHZ4Yqc).
 
-[Methods and events](https://github.com/KDani-99/FivePD-API/wiki/Methods-and-Events)
-
-[CalloutPropertiesAttribute](https://github.com/KDani-99/FivePD-API/wiki/CalloutPropertiesAttribute)
+If you wish to view videos on creating callouts using this API you can find a playlist of videos [HERE](https://www.youtube.com/playlist?list=PL3m-r_SUQzQyEcMn__cyQSTNoegN7RNbS).

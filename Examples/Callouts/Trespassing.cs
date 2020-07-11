@@ -2,44 +2,45 @@ using System;
 using System.Threading.Tasks;
 using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
-using CalloutAPI;
+using FivePD.API;
 
 namespace Trespassing
 {
-    [CalloutProperties("Trespassing", "1.0", Probability.High)]
-    public class Trespassing : CalloutAPI.Callout
+    [CalloutProperties("Trespassing","FivePD", "1.1")]
+    public class Trespassing : FivePD.API.Callout
     {
-        /* Define spawnables here (outside methods, globally) */
+        /* Define spawnables here (globally) */
+        /* Note: If you are storing your entities in objects, you might have to clean after your callout manually, in the OnCancelBefore() method (Note: Always check for null) */
         Ped Attacker;
         Ped Victim;
 
         Random random = new Random();
 
-        internal class WeaponChance
+        internal class RandomWeapon
         {
             public int Entry;
             public WeaponHash Weapon;
         }
-        WeaponChance[] Weapons = new WeaponChance[]
+        RandomWeapon[] Weapons = new RandomWeapon[]
         {
-            new WeaponChance{ Entry = 199,Weapon = WeaponHash.Pistol},
-            new WeaponChance{ Entry = 9,Weapon = WeaponHash.CombatPistol},
-            new WeaponChance{ Entry = 1,Weapon = WeaponHash.CarbineRifle},
-            new WeaponChance{ Entry = 8,Weapon = WeaponHash.Dagger},
-            new WeaponChance{ Entry = 20,Weapon = WeaponHash.Bat},
-            new WeaponChance{ Entry = 15,Weapon = WeaponHash.Knife},
+            new RandomWeapon{ Entry = 199,Weapon = WeaponHash.Pistol},
+            new RandomWeapon{ Entry = 9,Weapon = WeaponHash.CombatPistol},
+            new RandomWeapon{ Entry = 1,Weapon = WeaponHash.CarbineRifle},
+            new RandomWeapon{ Entry = 8,Weapon = WeaponHash.Dagger},
+            new RandomWeapon{ Entry = 20,Weapon = WeaponHash.Bat},
+            new RandomWeapon{ Entry = 15,Weapon = WeaponHash.Knife},
         };
 
         public Trespassing()
         {
-            /* Called when the callout is displayed */
-            /* How far the callout should be? let's say random by default, you can change it */
+            /* Called when the callout is instantiated */
+            /* How far the callout should be? let's say random by default ( you can change it ) */
 
-            /* NOTE: Do not ever place spawning here!! It'll be added to the callout queue, so the constructor will be called */
+            /* NOTE: Do not ever place spawning here! */
 
             /* Randomize callout distance */
 
-            this.InitBase(new Vector3(-935,196,67));
+            this.InitInfo(new Vector3(-935, 196, 67));
 
             this.ShortName = "Trespassing";
             this.CalloutDescription = "We've received a report that there is a trespassing in progress. Respond in code 2.";
@@ -48,19 +49,19 @@ namespace Trespassing
             /* How close the player needs to be to start the action (OnStart())*/
             this.StartDistance = 20f; // 30 feet? metres? unit...
         }
-        public async override Task Init()
+        public async override Task OnAccept()
         {
             /* Called when the callout is accepted */
-            /* Blip spawn happens in base.OnAccept() */
-            this.OnAccept();
+            /* Init the default blip (you can customize it) */
+            this.InitBlip();
 
-            /* Use the SpawnPed or SpawnVehicle method to get a properly networked ped (react to other players) */
-            Attacker = await SpawnPed(PedHash.ChinGoonCutscene, this.Location,12);
+            /* Use the SpawnPed or SpawnVehicle method to get a properly networked ped or vehicle (react to other players) */
+            Attacker = await SpawnPed(PedHash.ChinGoonCutscene, this.Location, 12);
 
-            Victim = await SpawnPed(PedHash.Bevhills01AFY, new Vector3(-936,202,67),170);
+            Victim = await SpawnPed(PedHash.Bevhills01AFY, new Vector3(-936, 202, 67), 170);
 
             /* Set ped behaviour */
-            Attacker.Weapons.Give(this.RollWeapon(),250,true,true);
+            Attacker.Weapons.Give(this.RollWeapon(), 250, true, true);
 
             Attacker.BlockPermanentEvents = true;
             Victim.BlockPermanentEvents = true;
@@ -73,11 +74,11 @@ namespace Trespassing
             base.OnStart(player); // -> to remove the blip from the map (yellow circle by default)
 
             int x = random.Next(1, 100 + 1);
-            if(x <= 40)
+            if (x <= 40)
             {
                 this.Attack(player);
             }
-            else if(x > 40 && x <= 65)
+            else if (x > 40 && x <= 65)
             {
                 this.Flee(player);
             }
@@ -91,19 +92,19 @@ namespace Trespassing
         {
             this.Attacker.Task.FleeFrom(player);
 
-            await BaseScript.Delay(random.Next(5500,7500));
+            await BaseScript.Delay(random.Next(5500, 7500));
             int x = random.Next(1, 100 + 1);
 
             TaskSequence sequence = new TaskSequence();
             bool changedTask = false;
-            if(x <= 30)
+            if (x <= 30)
             {
-                /* 30 % the closest ped */
+                /* 30 % to attack the closest ped */
                 sequence.AddTask.FightAgainst(GetClosestPed(this.Attacker));
                 sequence.AddTask.FleeFrom(player);
                 changedTask = true;
             }
-            else if(x > 30 && x < 50)
+            else if (x > 30 && x < 50)
             {
                 /* 20% to attack the player */
                 sequence.AddTask.FightAgainst(player);
@@ -112,9 +113,9 @@ namespace Trespassing
             }
             sequence.Close();
 
-            if(changedTask)
+            if (changedTask)
             {
-                
+
                 ClearPedTasks(this.Attacker.Handle);
                 ClearPedTasksImmediately(this.Attacker.Handle);
 
@@ -124,24 +125,23 @@ namespace Trespassing
         }
         public async Task RandomBehaviour()
         {
-            await BaseScript.Delay(random.Next(4000,6500));
+            await BaseScript.Delay(random.Next(4000, 6500));
 
             int x = random.Next(1, 100 + 1);
-            if(x <= 25)
+            if (x <= 25)
             {
                 ClearPedTasks(this.Attacker.Handle);
                 ClearPedTasksImmediately(this.Attacker.Handle);
 
                 this.Attacker.Task.FightAgainst(GetClosestPed(Attacker));
             }
-            else if(x > 25 && x <= 40)
+            else if (x > 25 && x <= 40)
             {
                 ClearPedTasks(this.Attacker.Handle);
                 ClearPedTasksImmediately(this.Attacker.Handle);
 
                 this.Attacker.Task.ReactAndFlee(GetClosestPed(Attacker));
             }
-            Debug.WriteLine("In tick event");
         }
 
         private Ped GetClosestPed(Ped p)
@@ -171,10 +171,10 @@ namespace Trespassing
         {
             int x = random.Next(1, 100 + 1);
 
-            TaskSequence sequence = new TaskSequence();            
+            TaskSequence sequence = new TaskSequence();
 
             /* 60% to attack the victim - 40 % to attack the player */
-            if(x <= 60)
+            if (x <= 60)
             {
                 sequence.AddTask.FightAgainst(Victim);
 
@@ -204,7 +204,7 @@ namespace Trespassing
 
             int x = random.Next(1, overall);
             overall = 0;
-            for(int i=0;i<this.Weapons.Length;i++)
+            for (int i = 0; i < this.Weapons.Length; i++)
             {
                 overall += this.Weapons[i].Entry;
                 if (overall > x)
