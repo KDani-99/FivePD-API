@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
@@ -19,6 +19,66 @@ namespace FivePD.API
             Mechanic = 6,
             PrisonTransport = 7
         }
+
+        /// <summary>
+        /// A list of PedHashes that do not work with FivePD.
+        /// </summary>
+        public static PedHash[] UnsupportedPedHashes { get; } =
+        {
+            PedHash.Humpback,
+            PedHash.Dolphin,
+            PedHash.KillerWhale,
+            PedHash.Fish,
+            PedHash.HammerShark,
+            PedHash.TigerShark,
+            PedHash.Boar,
+            PedHash.Cat,
+            PedHash.ChickenHawk,
+            PedHash.Chimp,
+            PedHash.Coyote,
+            PedHash.Cow,
+            PedHash.Deer,
+            PedHash.Pig,
+            PedHash.Rabbit,
+            PedHash.Crow,
+            PedHash.Cormorant,
+            PedHash.Husky,
+            PedHash.Rottweiler,
+            PedHash.Pug,
+            PedHash.Poodle,
+            PedHash.Retriever,
+            PedHash.Seagull,
+            PedHash.Pigeon,
+            PedHash.MountainLion,
+            PedHash.BradCadaverCutscene,
+            PedHash.Chop,
+            PedHash.Hen,
+            PedHash.JohnnyKlebitz,
+            PedHash.LamarDavisCutscene,
+            PedHash.MagentaCutscene,
+            PedHash.Marston01,
+            PedHash.Misty01,
+            PedHash.MovAlien01,
+            PedHash.MoviePremFemaleCutscene,
+            PedHash.MoviePremMaleCutscene,
+            PedHash.MrsPhillipsCutscene,
+            PedHash.MrKCutscene,
+            PedHash.NataliaCutscene,
+            PedHash.NigelCutscene,
+            PedHash.NervousRonCutscene,
+            PedHash.Niko01,
+            PedHash.PaigeCutscene,
+            PedHash.OscarCutscene,
+            PedHash.OrtegaCutscene,
+            PedHash.OrleansCutscene,
+            PedHash.Orleans,
+            PedHash.Pogo01,
+            PedHash.Rat,
+            PedHash.Rhesus,
+            PedHash.Stingray,
+            PedHash.SteveHainsCutscene,
+            PedHash.Westy
+        };
 
         public delegate void ForceCalloutDelegate(string guid);
         /// <summary>
