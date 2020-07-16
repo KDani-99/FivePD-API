@@ -42,7 +42,7 @@ namespace FivePD.API
         public delegate Task<ExpandoObject> GetVehicleDataDelegate(int networkID);
         public static GetVehicleDataDelegate GetVehicleData;
 
-        public delegate void SetVehicleDataDelegate(int vehicle, ExpandoObject data);
+        public delegate void SetVehicleDataDelegate(int vehicle,ExpandoObject data);
         public static SetVehicleDataDelegate SetVehicleData;
 
         public delegate void ExcludeVehicleFromTrafficStopDelegate(int networkID, bool exclude);
@@ -60,6 +60,30 @@ namespace FivePD.API
         /// Cancels the last requested service (by service type).
         /// </summary>
         public static CancelServiceDelegate CancelService;
+
+        #endregion
+
+        #region Traffic Stop
+        public delegate Task<bool> IsPlayerPerformingTrafficStopDelegate();
+        public static IsPlayerPerformingTrafficStopDelegate IsPlayerPerformingTrafficStop;
+
+        public delegate Task<Vehicle> GetVehicleFromTrafficStopDelegate();
+        public static GetVehicleFromTrafficStopDelegate GetVehicleFromTrafficStop;
+        #endregion
+
+        #region Backups
+        public enum Backups
+        {
+            Code1 = 1,
+            Code2 = 2,
+            Code3 = 3,
+            Code99 = 99
+        }
+        public delegate void RequestBackupDelegate(Backups backup);
+        public static RequestBackupDelegate RequestBackup;
+
+        public delegate void CancelBackupDelegate();
+        public static CancelBackupDelegate CancelBackup;
         #endregion
 
         #region Ped

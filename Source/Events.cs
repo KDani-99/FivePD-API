@@ -16,6 +16,9 @@ namespace FivePD.API
         public delegate Task OnServiceCalledDelegate(Utilities.Services service);
         public static event OnServiceCalledDelegate OnServiceCalled;
 
+        public delegate Task OnServiceCancelledDelegate(Utilities.Services service);
+        public static event OnServiceCancelledDelegate OnServiceCancelled;
+
         public delegate Task OnCalloutReceivedDelegate(Callout callout);
         public static event OnCalloutReceivedDelegate OnCalloutReceived;
 
@@ -32,6 +35,10 @@ namespace FivePD.API
         public static void InvokeServiceEvent(Utilities.Services service)
         {
             OnServiceCalled?.Invoke(service);
+        }
+        public static void InvokeServiceCancelledEvent(Utilities.Services service)
+        {
+            OnServiceCancelled?.Invoke(service);
         }
         public static void InvokeCalloutReceivedEvent(Callout callout)
         {

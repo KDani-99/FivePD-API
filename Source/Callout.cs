@@ -97,7 +97,7 @@ namespace FivePD.API
 
             Ped ped = (Ped)Entity.FromHandle(CreatePed(0, model, location.X, location.Y, location.Z, heading, true, true));
             SetEntityAsMissionEntity(ped.Handle, true, true);
-
+            
             return ped;
         }
 
@@ -297,7 +297,7 @@ namespace FivePD.API
         public delegate void ShowDialogDelegate(string text, int duration ,float showRadius);
         public ShowDialogDelegate ShowDialog { get; set; }
 
-        public delegate void ShowNotificationDelegate(string text, string textureDict, string textureName, string sender, string subject, float showRadius);
+        public delegate void ShowNotificationDelegate(string text, string textureDict, string textureName, string sender, string subject, float showRadius,int bgColor = -1);
         public ShowNotificationDelegate ShowNetworkedNotification { get; set; }
 
         public delegate void UpdateDataDelegate(string location = null);
