@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using CitizenFX.Core;
 using System.Dynamic;
 using System.Threading.Tasks;
-using CitizenFX.Core;
+using System.Collections.Generic;
 
 namespace FivePD.API
 {
@@ -165,23 +166,17 @@ namespace FivePD.API
         /// </summary>
         public static Ped GetClosestPed(Ped p)
         {
-            Ped[] all = World.GetAllPeds();
-            if (all.Length == 0)
-                return null;
-            float closest = float.MaxValue;
-            Ped close = null;
-            foreach (Ped ped in all)
+            Dictionary<Ped, float> closestPeds = new Dictionary<Ped, float>();
+            World.GetAllPeds()
+                .Where(ped => ped != Game.PlayerPed).ToList()
+                .ForEach(ped => closestPeds.Add(ped, World.GetDistance(ped.Position, p.Position)));
+
+            if (closestPeds.Count == 0)
             {
-                if (Game.PlayerPed == ped)
-                    continue;
-                float distance = World.GetDistance(ped.Position, p.Position);
-                if (distance < closest)
-                {
-                    close = ped;
-                    closest = distance;
-                }
-            };
-            return close;
+                return null;
+            }
+
+            return closestPeds.OrderBy(distance => distance.Value).FirstOrDefault().Key;
         }
         /// <summary>
         /// Returns a random position in the player's department area.
