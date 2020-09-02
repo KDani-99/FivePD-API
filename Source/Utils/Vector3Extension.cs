@@ -40,6 +40,9 @@ namespace FivePD.API.Utils
         /// </summary>
         internal static float DistanceTo(this Vector3 source, Vector3 target) => World.GetDistance(source, target);
 
+        /// <summary>
+        /// Returns the provided offset added to this position
+        /// </summary>
         internal static Vector3 ApplyOffset(this Vector3 source, Vector3 offset) => new Vector3(source.X + offset.X, source.Y + offset.Y, source.Z + offset.Z);
 
         /// <summary>
