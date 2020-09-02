@@ -4,6 +4,7 @@ using CitizenFX.Core;
 using System.Dynamic;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using FivePD.API.Utils;
 
 namespace FivePD.API
 {
@@ -169,7 +170,7 @@ namespace FivePD.API
             Dictionary<Ped, float> closestPeds = new Dictionary<Ped, float>();
             World.GetAllPeds()
                 .Where(ped => ped != Game.PlayerPed).ToList()
-                .ForEach(ped => closestPeds.Add(ped, World.GetDistance(ped.Position, p.Position)));
+                .ForEach(ped => closestPeds.Add(ped, ped.Position.DistanceTo(p.Position)));
 
             if (closestPeds.Count == 0)
             {
