@@ -9,7 +9,7 @@ namespace FivePD.API
     /// <summary>
     /// Implement this abstract class to make your own callout. This class defines the main callout structure as well as some basic helper methods.
     /// </summary>
-    public abstract class Callout : BaseScript
+    public abstract class Callout
     {
         /// <summary>
         /// The list of players that has accepted the callout
@@ -92,7 +92,7 @@ namespace FivePD.API
             while (!model.IsLoaded)
             {
                 model.Request();
-                await Delay(250);
+                await BaseScript.Delay(250);
             }
 
             Ped ped = await World.CreatePed(model, location, heading);
@@ -116,7 +116,7 @@ namespace FivePD.API
             while (!model.IsLoaded)
             {
                 model.Request();
-                await Delay(250);
+                await BaseScript.Delay(250);
             }
 
             Vehicle vehicle = await World.CreateVehicle(model, location, heading);
