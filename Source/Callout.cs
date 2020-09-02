@@ -2,6 +2,7 @@
 using CitizenFX.Core;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using static CitizenFX.Core.Native.API;
 
 namespace FivePD.API
 {
@@ -95,9 +96,9 @@ namespace FivePD.API
                 await BaseScript.Delay(250);
             }
 
-            Ped ped = await World.CreatePed(model, location, heading);
+            Ped ped = (Ped)Entity.FromHandle(CreatePed(0, (uint)model.Hash, location.X, location.Y, location.Z, heading, true, true));
             ped.IsPersistent = true;
-            
+
             return ped;
         }
 
@@ -119,7 +120,7 @@ namespace FivePD.API
                 await BaseScript.Delay(250);
             }
 
-            Vehicle vehicle = await World.CreateVehicle(model, location, heading);
+            Vehicle vehicle = (Vehicle)Entity.FromHandle(CreateVehicle((uint)model.Hash, location.X, location.Y, location.Z, heading, true, true));
             vehicle.IsPersistent = true;
             
             return vehicle;
