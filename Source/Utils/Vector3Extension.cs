@@ -1,5 +1,5 @@
-﻿using CitizenFX.Core;
-using System;
+﻿using System;
+using CitizenFX.Core;
 
 namespace FivePD.API.Utils
 {
@@ -25,7 +25,7 @@ namespace FivePD.API.Utils
         /// <returns></returns>
         private static Vector3 RandomXy()
         {
-            var rnd = new Random(Environment.TickCount);
+            var rnd = new Random(Guid.NewGuid().GetHashCode());
 
             var v3 = new Vector3();
             v3.X = (float)rnd.NextDouble() - 0.5f;

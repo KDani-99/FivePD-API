@@ -194,7 +194,7 @@ namespace FivePD.API
         {
             PedHash ped;
             var pedHashes = Enum.GetValues(typeof(PedHash));
-            Random rnd = new Random();
+            Random rnd = new Random(Guid.NewGuid().GetHashCode());
 
             do
             {
