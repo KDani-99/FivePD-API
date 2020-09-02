@@ -17,7 +17,7 @@ To request a new feature, either create a **pull request** or create a new **iss
 Before you start making your callouts, it's recommended to take a look at [how to write your first script in FiveM](https://docs.fivem.net/docs/scripting-manual/runtimes/csharp/) as this API is basically nothing more, but a wrapper to make it easier to write callouts with the reduced chance of doing something error prone (With extended features).
 
 ##### Creating a new callout using the example and cmd compiler
-1. Download one of the [examples](https://github.com/KDani-99/FivePD-API/tree/master/Examples)).
+1. Download one of the [examples](https://github.com/KDani-99/FivePD-API/tree/master/Examples).
 2. Open the file and start making your new callout.
 3. Type the following command in cmd (cs compiler) to compile your code.: (Assuming that you have the references in the same directory)<br/>
 **Note:** .net.dll must be the assembly name. (For detailed instructions, [visit the official command line building csc](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/command-line-building-with-csc-exe))
