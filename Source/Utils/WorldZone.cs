@@ -128,15 +128,9 @@ namespace FivePD.API.Utils
 
             WorldZone worldZone = Zones.FirstOrDefault(zone => zone.GameName.ToLower() == zoneNameLower);
 
-            if (worldZone == null)
-            {
-                return new WorldZone(zoneName, zoneName, EWorldZoneCounty.SanAndreas);
-            }
+            if (worldZone == null) return new WorldZone(zoneName, zoneName, EWorldZoneCounty.SanAndreas);
 
-            if (zoneNameLower == "sanand" && position.X > 3000.0 && position.Y < -4000.0)
-            {
-                return new WorldZone("NorthYankton", "North Yankton", EWorldZoneCounty.NorthYankton);
-            }
+            if (zoneNameLower == "sanand" && position.X > 3000.0 && position.Y < -4000.0) return new WorldZone("NorthYankton", "North Yankton", EWorldZoneCounty.NorthYankton);
 
             return worldZone;
         }

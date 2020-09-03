@@ -3,7 +3,9 @@ using CitizenFX.Core;
 
 namespace FivePD.API.Utils
 {
-    
+    /// <summary>
+    /// Adds some handy extensions to Vectors
+    /// </summary>
     public static class Vector3Extension
     {
         /// <summary>
@@ -77,17 +79,11 @@ namespace FivePD.API.Utils
         {
             Vector3 location = ClosestParkedCarPlacement(source, false);
 
-            if (location.IsZero)
-            {
-                return null;
-            }
+            if (location.IsZero) return null;
 
             RaycastResult raycast = World.RaycastCapsule(location.ApplyOffset(new Vector3(0.0f, 0.0f, 3.0f)), location, 3, (IntersectOptions)10);
 
-            if (raycast.DitHitEntity == false || !raycast.HitEntity.Model.IsVehicle)
-            {
-                return null;
-            }
+            if (raycast.DitHitEntity == false || !raycast.HitEntity.Model.IsVehicle) return null;
 
             return (Vehicle)raycast.HitEntity;
         }
