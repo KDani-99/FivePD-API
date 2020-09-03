@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FivePD.API.Utils
 {
-    class WorldZone
+    public class WorldZone
     {
         private readonly EWorldZoneCounty county;
         private static readonly IReadOnlyList<WorldZone> Zones = new List<WorldZone>() {
