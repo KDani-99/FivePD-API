@@ -1,5 +1,4 @@
-﻿using System;
-using CitizenFX.Core;
+﻿using CitizenFX.Core;
 using System.Dynamic;
 
 namespace FivePD.API.Utils
@@ -13,15 +12,6 @@ namespace FivePD.API.Utils
         /// Get current ped
         /// </summary>
         public static Ped Ped => Game.PlayerPed;
-
-        /// <summary>
-        /// Get or set current ped data
-        /// </summary>
-        public static ExpandoObject PedData
-        {
-            get => Utilities.GetPedData(Ped.NetworkId).Result;
-            set => Utilities.SetPedData(Ped.NetworkId, value);
-        }
 
         /// <summary>
         /// Get current player
@@ -56,23 +46,5 @@ namespace FivePD.API.Utils
         /// Get is client currently on a traffic stop
         /// </summary>
         public static bool OnTrafficStop => Utilities.IsPlayerPerformingTrafficStop().Result;
-
-        /// <summary>
-        /// Get or set current vehicle data
-        /// </summary>
-        public static ExpandoObject VehicleData
-        {
-            get
-            {
-                if (Ped.CurrentVehicle == null) return null;
-
-                return Utilities.GetVehicleData(Ped.CurrentVehicle.NetworkId).Result;
-            }
-
-            set
-            {
-                if (Ped.CurrentVehicle != null) Utilities.SetVehicleData(Ped.CurrentVehicle.NetworkId, value);
-            }
-        }
     }
 }
