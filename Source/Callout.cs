@@ -1,9 +1,9 @@
-using FivePD.API.Utils;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Dynamic;
 using CitizenFX.Core;
+using FivePD.API.Utils;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using static CitizenFX.Core.Native.API;
 
 namespace FivePD.API
@@ -89,16 +89,18 @@ namespace FivePD.API
         /// <returns></returns>
         protected async Task<Ped> SpawnPed(PedHash pedHash, Vector3 location, float heading = 0f)
         {
-            uint model = (uint)pedHash;
+            Model model = new Model(pedHash);
 
-            RequestModel(model);
-
-            while (!HasModelLoaded(model))
+            model.Request();
+            while (!model.IsLoaded)
+            {
+                model.Request();
                 await BaseScript.Delay(0);
+            }
 
-            Ped ped = (Ped)Entity.FromHandle(CreatePed(0, model, location.X, location.Y, location.Z, heading, true, true));
-            SetEntityAsMissionEntity(ped.Handle, true, true);
-            
+            Ped ped = (Ped)Entity.FromHandle(CreatePed(0, (uint)model.Hash, location.X, location.Y, location.Z, heading, true, true));
+            ped.IsPersistent = true;
+
             return ped;
         }
 
@@ -111,15 +113,17 @@ namespace FivePD.API
         /// <returns>The vehicle you spawned</returns>
         protected async Task<Vehicle> SpawnVehicle(VehicleHash vehicleHash, Vector3 location, float heading = 0f)
         {
-            uint model = (uint)vehicleHash;
+            Model model = new Model(vehicleHash);
 
-            RequestModel(model);
-
-            while (!HasModelLoaded(model))
+            model.Request();
+            while (!model.IsLoaded)
+            {
+                model.Request();
                 await BaseScript.Delay(0);
+            }
 
-            Vehicle vehicle = (Vehicle)Entity.FromHandle(CreateVehicle(model, location.X, location.Y, location.Z, heading, true, true));
-            SetEntityAsMissionEntity(vehicle.Handle, true, true);
+            Vehicle vehicle = (Vehicle)Entity.FromHandle(CreateVehicle((uint)model.Hash, location.X, location.Y, location.Z, heading, true, true));
+            vehicle.IsPersistent = true;
             
             return vehicle;
         }
@@ -138,14 +142,16 @@ namespace FivePD.API
         /// <param name="location">The location for your callout.</param>
         protected void InitInfo(Vector3 location)
         {
-            this.AssignedPlayers = new List<Ped>();
-            this.AssignedPlayers.Add(Game.PlayerPed);
-            this.CalloutDescription = "<Unnamed Callout Description>";
-            this.ShortName = "<Unnamed Callout>";
-            this.ResponseCode = -1;
-            this.Location = location;
-            this.Identifier = Guid.NewGuid().ToString();
-            this.FixedLocation = false;
+            AssignedPlayers = new List<Ped>
+            {
+                Game.PlayerPed
+            };
+            CalloutDescription = "<Unnamed Callout Description>";
+            ShortName = "<Unnamed Callout>";
+            ResponseCode = -1;
+            Location = location;
+            Identifier = Guid.NewGuid().ToString();
+            FixedLocation = false;
         }
 
         /// <summary>
@@ -154,12 +160,13 @@ namespace FivePD.API
         /// </summary>
         protected void InitBlip(float circleRadius = 75f, BlipColor color = BlipColor.Yellow, BlipSprite sprite = BlipSprite.BigCircle, int alpha = 100)
         {
-            int blipHandle = AddBlipForRadius(this.Location.X, this.Location.Y, this.Location.Z, circleRadius);
-            this.Radius = circleRadius;
-            this.Marker = new Blip(blipHandle);
-            this.Marker.Sprite = sprite;
-            this.Marker.Color = color;
-            this.Marker.Alpha = alpha;
+            Blip blip = World.CreateBlip(Location, circleRadius);
+
+            Radius = circleRadius;
+            Marker = blip;
+            Marker.Sprite = sprite;
+            Marker.Color = color;
+            Marker.Alpha = alpha;
         }
 
         /// <summary>
@@ -177,10 +184,10 @@ namespace FivePD.API
         #region Events
         public virtual void OnStart(Ped closest)
         {
-            this.Started = true;
+            Started = true;
             if (closest.NetworkId != Game.PlayerPed.NetworkId)
             {
-                this.AssignedPlayers.Add(closest);
+                AssignedPlayers.Add(closest);
             }
         }
 
@@ -243,28 +250,8 @@ namespace FivePD.API
         /// </example>
         /// </summary>
         /// <returns>True to enable, false to disable.</returns>
-        public virtual async Task<bool> CheckRequirements()
-        {
-            return true;
-        }
-
-        /* Experimental below */
-        public List<object> Clues;
-        /* If a criminal gets X distance away, attach a question mark nearby at every Y secs */
-        protected void AttachClueToPed(Ped ped, float minDistance, int repeat = 15)
-        {
-            if (this.Clues == null)
-                this.Clues = new List<object>();
-
-            var clue = new
-            {
-                PedNetworkID = ped.NetworkId,
-                minDistance,
-                repeat
-            };
-            this.Clues.Add(clue);
-        }
-
+        public virtual async Task<bool> CheckRequirements() => true;
+        
         /// <summary>
         /// Receive Tick from the callout manager.
         /// To subscribe to ticks, please use the <see cref="Tick"/> event.
@@ -273,8 +260,7 @@ namespace FivePD.API
         /// <seealso cref="Tick"/>
         public async Task ReceiveTick()
         {
-            if (Tick != null)
-                await Tick.Invoke();
+            if (Tick != null) await Tick.Invoke();
         }
 
         /// <summary>

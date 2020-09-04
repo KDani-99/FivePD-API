@@ -37,8 +37,9 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CitizenFX.Core">
-      <HintPath>CitizenFX.Core.dll</HintPath>
+    <Reference Include="CitizenFX.Core.Client, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\CitizenFX.Core.Client.1.0.2911\lib\net45\CitizenFX.Core.Client.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,12 +54,16 @@
     <Compile Include="Callout.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Plugin.cs" />
-    <Compile Include="Pursuit.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\EnumExtensions.cs" />
+    <Compile Include="Utils\ListExtensions.cs" />
+    <Compile Include="Utils\RandomUtils.cs" />
     <Compile Include="Utils\Vector3Extension.cs" />
     <Compile Include="Utils\WorldZone.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
