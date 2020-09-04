@@ -250,17 +250,8 @@ namespace FivePD.API
         /// </example>
         /// </summary>
         /// <returns>True to enable, false to disable.</returns>
-        public virtual async Task<bool> CheckRequirements()
-        {
-            return true;
-        }
-
-        /* Experimental below */
-        public List<object> Clues = new List<object>();
-        /* If a criminal gets X distance away, attach a question mark nearby at every Y secs */
-        protected void AttachClueToPed(Ped ped, float minDistance, int repeat = 15) => Clues.Add(new { PedNetworkID = ped.NetworkId, minDistance, repeat });
+        public virtual async Task<bool> CheckRequirements() => true;
         
-
         /// <summary>
         /// Receive Tick from the callout manager.
         /// To subscribe to ticks, please use the <see cref="Tick"/> event.
@@ -269,8 +260,7 @@ namespace FivePD.API
         /// <seealso cref="Tick"/>
         public async Task ReceiveTick()
         {
-            if (Tick != null)
-                await Tick.Invoke();
+            if (Tick != null) await Tick.Invoke();
         }
 
         /// <summary>
