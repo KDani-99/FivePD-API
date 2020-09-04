@@ -95,7 +95,7 @@ namespace FivePD.API
             while (!model.IsLoaded)
             {
                 model.Request();
-                await BaseScript.Delay(250);
+                await BaseScript.Delay(0);
             }
 
             Ped ped = (Ped)Entity.FromHandle(CreatePed(0, (uint)model.Hash, location.X, location.Y, location.Z, heading, true, true));
@@ -119,7 +119,7 @@ namespace FivePD.API
             while (!model.IsLoaded)
             {
                 model.Request();
-                await BaseScript.Delay(250);
+                await BaseScript.Delay(0);
             }
 
             Vehicle vehicle = (Vehicle)Entity.FromHandle(CreateVehicle((uint)model.Hash, location.X, location.Y, location.Z, heading, true, true));
