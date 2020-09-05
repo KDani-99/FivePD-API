@@ -104,7 +104,7 @@ namespace FivePD.API
         public delegate Task<ExpandoObject> GetVehicleDataDelegate(int networkID);
         public static GetVehicleDataDelegate GetVehicleData;
 
-        public delegate void SetVehicleDataDelegate(int vehicle,ExpandoObject data);
+        public delegate void SetVehicleDataDelegate(int vehicle, ExpandoObject data);
         public static SetVehicleDataDelegate SetVehicleData;
 
         public delegate void ExcludeVehicleFromTrafficStopDelegate(int networkID, bool exclude);

@@ -61,6 +61,7 @@
     <Compile Include="Utils\RandomUtils.cs" />
     <Compile Include="Utils\Vector3Extension.cs" />
     <Compile Include="Utils\WorldZone.cs" />
+    <Compile Include="Utils\Client.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
