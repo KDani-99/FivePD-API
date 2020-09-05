@@ -21,7 +21,7 @@ namespace FivePD.API.Utils
         /// <summary>
         /// Get current player data
         /// </summary>
-        public static ExpandoObject PlayerData => Utilities.GetPlayerData.Invoke();
+        public static ExpandoObject PlayerData => Utilities.GetPlayerData();
 
         /// <summary>
         /// Get current callout
