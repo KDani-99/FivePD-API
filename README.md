@@ -36,6 +36,8 @@ csc -target:library CalloutName.cs -reference:CalloutAPI.net.dll -reference:Citi
 
 For documentation, [visit the "wiki" tab](https://github.com/KDani-99/FivePD-API/wiki).
 
+If you wish to upgrade your old callouts, [click here](https://github.com/KDani-99/FivePD-API/wiki/API-v1.0#converting-old-callouts)
+
 ### Additional Support/Resources
 We have an Offical FivePD API Discord Server which you can visit [HERE](https://discord.gg/tHZ4Yqc).
 
