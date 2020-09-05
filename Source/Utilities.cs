@@ -229,7 +229,7 @@ namespace FivePD.API
         {
             Dictionary<Ped, float> closestPeds = new Dictionary<Ped, float>();
             World.GetAllPeds()
-                .Where(ped => ped != Game.PlayerPed).ToList()
+                .Where(ped => ped != Client.Ped).ToList()
                 .ForEach(ped => closestPeds.Add(ped, ped.Position.DistanceTo(p.Position)));
 
             if (closestPeds.Count == 0)

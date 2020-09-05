@@ -144,7 +144,7 @@ namespace FivePD.API
         {
             AssignedPlayers = new List<Ped>
             {
-                Game.PlayerPed
+                Client.Ped
             };
             CalloutDescription = "<Unnamed Callout Description>";
             ShortName = "<Unnamed Callout>";
@@ -185,7 +185,7 @@ namespace FivePD.API
         public virtual void OnStart(Ped closest)
         {
             Started = true;
-            if (closest.NetworkId != Game.PlayerPed.NetworkId)
+            if (closest.NetworkId != Client.Ped.NetworkId)
             {
                 AssignedPlayers.Add(closest);
             }

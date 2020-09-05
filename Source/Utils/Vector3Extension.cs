@@ -88,6 +88,9 @@ namespace FivePD.API.Utils
             return (Vehicle)raycast.HitEntity;
         }
 
+        /// <summary>
+        /// Returns the WorldZone of the location provided
+        /// </summary>
         public static WorldZone GetCurrentWorldZone(this Vector3 source) => WorldZone.GetZoneAtPosition(source);
     }
 }
