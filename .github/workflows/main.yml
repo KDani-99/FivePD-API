@@ -1,0 +1,29 @@
+name: Pull check
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: dorny/paths-filter@v2.2.1
+      id: filter
+      with:
+        filters: |
+          API:
+            - 'Source/**/*'
+    # Build only if the source has changed
+    - name: Checkout code 
+      if: steps.filter.outputs.API == 'true'
+      uses: actions/checkout@v1
+    - name: Setup MSBuild
+      if: steps.filter.outputs.API == 'true'
+      uses: warrenbuckley/Setup-MSBuild@v1  
+    - name: Restore packages
+      if: steps.filter.outputs.API == 'true'
+      run: nuget restore Source/FivePD_API.sln
+    - name: Build API 
+      if: steps.filter.outputs.API == 'true'
+      run: msbuild Source/FivePD_API.sln /p:Configuration=Release
