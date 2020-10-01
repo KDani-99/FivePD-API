@@ -1,4 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using CitizenFX.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FivePD.API
 {
@@ -22,6 +27,9 @@ namespace FivePD.API
 
         public delegate Task OnCalloutCompletedDelegate(Callout callout);
         public static event OnCalloutCompletedDelegate OnCalloutCompleted;
+
+        public delegate Task OnRankChangedDelegate(string rank);
+        public static event OnRankChangedDelegate OnRankChanged;
 
         public static void InvokeDutyEvent(bool onDuty)
         {
@@ -47,6 +55,9 @@ namespace FivePD.API
         {
             OnCalloutCompleted?.Invoke(callout);
         }
-        // Func<bool,Task> OnDutyStatusChange;
+        public static void InvokeRankChangedEvent(string rank)
+        {
+            OnRankChanged?.Invoke(rank);
+        }
     }
 }
