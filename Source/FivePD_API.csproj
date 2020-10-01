@@ -53,15 +53,25 @@
   <ItemGroup>
     <Compile Include="Callout.cs" />
     <Compile Include="Events.cs" />
+    <Compile Include="Interfaces\IPursuit.cs" />
     <Compile Include="Plugin.cs" />
+    <Compile Include="Pursuit.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\EntityExtensions.cs" />
     <Compile Include="Utils\EnumExtensions.cs" />
+    <Compile Include="Utils\Item.cs" />
     <Compile Include="Utils\ListExtensions.cs" />
+    <Compile Include="Utils\PedData.cs" />
+    <Compile Include="Utils\PedQuestion.cs" />
+    <Compile Include="Utils\PlayerData.cs" />
     <Compile Include="Utils\RandomUtils.cs" />
     <Compile Include="Utils\Vector3Extension.cs" />
+    <Compile Include="Utils\VehicleData.cs" />
+    <Compile Include="Utils\Violation.cs" />
     <Compile Include="Utils\WorldZone.cs" />
   </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
