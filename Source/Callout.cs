@@ -1,10 +1,9 @@
-using System;
-using System.Dynamic;
-using CitizenFX.Core;
-using FivePD.API.Utils;
-using System.Threading.Tasks;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
+using FivePD.API.Utils;
 
 namespace FivePD.API
 {
@@ -31,11 +30,6 @@ namespace FivePD.API
         /// DON'T EDIT! CaseID will be automatically generated
         /// </summary>
         public string CaseID;
-        /// <summary>
-        /// The amount of XP that this call will add to the player's progression once completed<br/>
-        /// (NOTE: Server owners can set a fix amount, which will override this XP)
-        /// </summary>
-        public uint XP;
         /// <summary>
         /// Response Code (eg. 1,2,3,...)
         /// </summary>
@@ -90,7 +84,7 @@ namespace FivePD.API
         protected async Task<Ped> SpawnPed(PedHash pedHash, Vector3 location, float heading = 0f)
         {
             Model model = new Model(pedHash);
-
+            
             model.Request();
             while (!model.IsLoaded)
             {
@@ -124,11 +118,10 @@ namespace FivePD.API
 
             Vehicle vehicle = (Vehicle)Entity.FromHandle(CreateVehicle((uint)model.Hash, location.X, location.Y, location.Z, heading, true, true));
             vehicle.IsPersistent = true;
-            
+
             return vehicle;
         }
-
-        /// <summary>
+       /// <summary>
         /// DO NOT USE. Only here for backwards compatibility with callouts that use the older API.<br /><br />
         /// See <see cref="RandomUtils.GetRandomPed"/> for the alternative implementations.
         /// </summary>
@@ -230,7 +223,7 @@ namespace FivePD.API
         /// </summary>
         public Action EndCallout { get; set; }
 
-        public delegate void ShowDialogDelegate(string text, int duration, float showRadius);
+        public delegate void ShowDialogDelegate(string text, int duration ,float showRadius);
         public ShowDialogDelegate ShowDialog { get; set; }
 
         public delegate void ShowNotificationDelegate(string text, string textureDict, string textureName, string sender, string subject, float showRadius,int bgColor = -1);
@@ -238,7 +231,12 @@ namespace FivePD.API
 
         public delegate void UpdateDataDelegate(string location = null);
         public UpdateDataDelegate UpdateData { get; set; }
+        
+        public delegate void AddPedQuestionsDelegate(Ped ped,PedQuestion [] questions);
+        public AddPedQuestionsDelegate AddPedQuestions;
 
+        public delegate void AddPedQuestionDelegate(Ped ped, PedQuestion question);
+        public AddPedQuestionDelegate AddPedQuestion;
         /// <summary>
         /// This method allows you to influence whether this callout is currently allowed to initialize or not.
         /// Return <c>true</c> to enable the callout, <c>false</c> to disable.<br /><br />
@@ -251,7 +249,7 @@ namespace FivePD.API
         /// </summary>
         /// <returns>True to enable, false to disable.</returns>
         public virtual async Task<bool> CheckRequirements() => true;
-        
+
         /// <summary>
         /// Receive Tick from the callout manager.
         /// To subscribe to ticks, please use the <see cref="Tick"/> event.
