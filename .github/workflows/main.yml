@@ -10,6 +10,8 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+    - name: Checkout code 
+      uses: actions/checkout@v1
     - uses: dorny/paths-filter@v2.2.1
       id: filter
       with:
@@ -17,9 +19,6 @@ jobs:
           API:
             - 'Source/**/*'
     # Build only if the source has changed
-    - name: Checkout code 
-      if: steps.filter.outputs.API == 'true'
-      uses: actions/checkout@v1
     - name: Setup MSBuild
       if: steps.filter.outputs.API == 'true'
       uses: warrenbuckley/Setup-MSBuild@v1  
