@@ -1,10 +1,9 @@
-using System;
-using System.Linq;
-using CitizenFX.Core;
-using System.Dynamic;
-using FivePD.API.Utils;
-using System.Threading.Tasks;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using CitizenFX.Core;
+using System.Linq;
+using FivePD.API.Utils;
 
 namespace FivePD.API
 {
@@ -101,10 +100,10 @@ namespace FivePD.API
         public static GetCalloutsDelegate GetCallouts;
 
         #region Vehicle
-        public delegate Task<ExpandoObject> GetVehicleDataDelegate(int networkID);
+        public delegate Task<VehicleData> GetVehicleDataDelegate(int networkID);
         public static GetVehicleDataDelegate GetVehicleData;
 
-        public delegate void SetVehicleDataDelegate(int vehicle,ExpandoObject data);
+        public delegate void SetVehicleDataDelegate(int vehicle, VehicleData data);
         public static SetVehicleDataDelegate SetVehicleData;
 
         public delegate void ExcludeVehicleFromTrafficStopDelegate(int networkID, bool exclude);
@@ -126,10 +125,10 @@ namespace FivePD.API
         #endregion
 
         #region Traffic Stop
-        public delegate Task<bool> IsPlayerPerformingTrafficStopDelegate();
+        public delegate bool IsPlayerPerformingTrafficStopDelegate();
         public static IsPlayerPerformingTrafficStopDelegate IsPlayerPerformingTrafficStop;
 
-        public delegate Task<Vehicle> GetVehicleFromTrafficStopDelegate();
+        public delegate Vehicle GetVehicleFromTrafficStopDelegate();
         public static GetVehicleFromTrafficStopDelegate GetVehicleFromTrafficStop;
         #endregion
 
@@ -149,7 +148,7 @@ namespace FivePD.API
         #endregion
 
         #region Ped
-        public delegate Task<ExpandoObject> GetPedDataDelegate(int NetworkID);
+        public delegate Task<PedData> GetPedDataDelegate(int NetworkID);
         /// <summary>
         /// Retrieve internal FivePD information about a specific pedestrian.
         /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods or in an external script.<br /><br />
@@ -174,7 +173,7 @@ namespace FivePD.API
         /// <returns></returns>
         public static GetPedDataDelegate GetPedData;
 
-        public delegate void SetPedDelegate(int NetworkID, ExpandoObject PedData);
+        public delegate void SetPedDelegate(int NetworkID, PedData PedData);
         /// <summary>
         /// Set information for a specific pedestrian.
         /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods or in an external script.<br /><br />
@@ -207,14 +206,13 @@ namespace FivePD.API
         /// Call GetPlayerData() if you want to access the PlayerData object. 
         /// Please note that you cannot call this method in the constructor of your callout. 
         /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods.<br /><br />
-        /// The following properties can be accessed in the ExpandoObject:<br />
+        /// The following properties can be accessed in the PlayerData:<br />
         ///      - DisplayName (string) <br />
         ///      - Callsign (string) <br />
         ///      - Department (string)  <br />
         ///      - DepartmentID (int)  <br />
-        ///      - XP (int)
         /// </summary>
-        public static Func<ExpandoObject> GetPlayerData;
+        public static Func<PlayerData> GetPlayerData;
 
         public delegate bool IsPlayerOnDutyDelegate();
         public static IsPlayerOnDutyDelegate IsPlayerOnDuty;
@@ -222,6 +220,14 @@ namespace FivePD.API
         public delegate void SetPlayerDutyDelegate(bool onDuty);
         public static SetPlayerDutyDelegate SetPlayerDuty;
 
+        public delegate void SyncBlipDelegate(Blip blip);
+        public static SyncBlipDelegate SyncBlip;
+
+        public delegate void SyncBlipWithRadiusDelegate(Blip blip,float radius);
+        public static SyncBlipWithRadiusDelegate SyncBlipWithRadius;
+        
+        public delegate void SyncBlipDeleteDelegate(Blip blip);
+        public static SyncBlipDeleteDelegate SyncBlipDelete;
         /// <summary>
         /// Returns the closest ped.
         /// </summary>
