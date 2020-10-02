@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FivePD.API.Utils
 {
-    static class EntityExtensions
+    public static class EntityExtensions
     {
         #region Blip
         public static void Sync(this Blip blip) => Utilities.SyncBlip(blip);
