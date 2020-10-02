@@ -34,7 +34,7 @@ csc -target:library CalloutName.cs -reference:CalloutAPI.net.dll -reference:Citi
 
 (For detailed instructions on how to create your first FiveM script, [click here](https://docs.fivem.net/docs/scripting-manual/runtimes/csharp/ "refer here"))
 
-For documentation, [visit the "wiki" tab](https://github.com/KDani-99/FivePD-API/wiki).
+For documentation, [visit the official FivePD documentation website](https://docs.fivepd.com/).
 
 If you wish to upgrade your old callouts, [click here](https://github.com/KDani-99/FivePD-API/wiki/API-v1.0#converting-old-callouts)
 
