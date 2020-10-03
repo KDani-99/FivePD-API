@@ -11,10 +11,28 @@ namespace FivePD.API.Utils
             Cocaine,
             Marijuana
         }
+
+        public class License
+        {
+            public enum Status
+            {
+                Valid = 0,
+                Expired = 1,
+                Revoked = 2,
+                Suspended = 3
+            }
+
+            public Status LicenseStatus;
+            public string ExpirationDate;
+        }
+
         public string FirstName;
         public string LastName;
         public string Warrant;
-        public string License;
+        public License DriverLicense;
+        public License HuntingLicense;
+        public License FishingLicense;
+        public License WeaponLicense;
         public string DateOfBirth;
         public double BloodAlcoholLevel;
         public Drugs [] UsedDrugs;
