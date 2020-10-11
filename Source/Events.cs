@@ -31,6 +31,9 @@ namespace FivePD.API
         public delegate Task OnRankChangedDelegate(string rank);
         public static event OnRankChangedDelegate OnRankChanged;
 
+        public delegate Task OnPedArrestedDelegate(Ped ped);
+        public static event OnPedArrestedDelegate OnPedArrested;
+
         public static void InvokeDutyEvent(bool onDuty)
         {
             OnDutyStatusChange?.Invoke(onDuty);
@@ -58,6 +61,10 @@ namespace FivePD.API
         public static void InvokeRankChangedEvent(string rank)
         {
             OnRankChanged?.Invoke(rank);
+        }
+        public static void InvokePedArrestedEvent(Ped ped)
+        {
+            OnPedArrested?.Invoke(ped);
         }
     }
 }
