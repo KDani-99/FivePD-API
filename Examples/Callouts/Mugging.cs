@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CitizenFX.Core;
@@ -11,13 +11,13 @@ namespace Mugging
     {
         private readonly Random rnd = new Random();
         private Ped suspect, victim;
-        
+
         public Mugging()
         {
             int distance = rnd.Next(200, 750);
-            float offsetX = rnd.Next(-1*distance, distance);
-            float offsetY = rnd.Next(-1*distance, distance);
-            
+            float offsetX = rnd.Next(-1 * distance, distance);
+            float offsetY = rnd.Next(-1 * distance, distance);
+
             InitInfo(World.GetNextPositionOnStreet(Game.PlayerPed.GetOffsetPosition(new Vector3(offsetX, offsetY, 0))));
             ShortName = "Mugging";
             CalloutDescription = "We've received a report of a mugging. Respond in code 3.";
@@ -28,19 +28,19 @@ namespace Mugging
         public override async Task OnAccept()
         {
             InitBlip();
-            suspect = await SpawnPed(GetRandomPed(), Location);
-            victim = await SpawnPed(GetRandomPed(), suspect.GetOffsetPosition(new Vector3(2f, 4f, 0f)));
-            
+            suspect = await SpawnPed(FivePD.API.Utils.RandomUtils.GetRandomPed(), Location);
+            victim = await SpawnPed(FivePD.API.Utils.RandomUtils.GetRandomPed(), suspect.GetOffsetPosition(new Vector3(2f, 4f, 0f)));
+
             keepTask(suspect);
             keepTask(victim);
-            
+
             suspect.Weapons.Give(getRandomWeapon(), 1, true, true);
         }
 
         public override void OnStart(Ped player)
         {
             base.OnStart(player);
-            
+
             suspect.Task.FightAgainst(victim);
 
             int chance = rnd.Next(0, 10);
@@ -49,8 +49,8 @@ namespace Mugging
             {
                 // 50% that the victim has a weapon as well
                 chance = rnd.Next(0, 10);
-                if(chance >= 0 && chance <= 4) victim.Weapons.Give(getRandomWeapon(), 1, true, true);
-                
+                if (chance >= 0 && chance <= 4) victim.Weapons.Give(getRandomWeapon(), 1, true, true);
+
                 victim.Task.FightAgainst(suspect);
             }
             else victim.Task.ReactAndFlee(suspect);
@@ -61,7 +61,7 @@ namespace Mugging
             p.BlockPermanentEvents = true;
             p.AlwaysKeepTask = true;
         }
-        
+
         private WeaponHash getRandomWeapon()
         {
             List<WeaponHash> weapons = new List<WeaponHash>
