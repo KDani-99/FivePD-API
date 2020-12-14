@@ -193,32 +193,59 @@ namespace FivePD.API
         /// <returns></returns>
         public static GetPedDataDelegate GetPedData;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="NetworkID">The network id of the given entity</param>
+        /// <param name="PedData">The PedData instance containing custom properties.</param>
+        ///  /// <seealso cref="PedData"/>
         public delegate void SetPedDelegate(int NetworkID, PedData PedData);
         /// <summary>
-        /// Set information for a specific pedestrian.
+        /// Sets information for the given ped.
         /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods or in an external script.<br /><br />
-        /// The following properties can be set in the <c>PedData</c>:<br />
-        ///     - firstname (string)<br />
-        ///     - lastname (string)<br />
-        ///     - alcoholLevel (double)<br />
-        ///     - drugsUsed (bool[]) -> 0 = Meth, 1 = Cocaine, 2 = Marijuana<br />
-        ///     - items (List&lt;object&gt;)
         /// <example>
         /// <code>
-        /// dynamic myData = new ExpandoObject();<br />
-        /// myData.firstname = "John";<br />
-        /// myData.lastname = "Doe";<br />
-        /// myData.alcoholLevel = 0.20;<br />
-        /// myData.drugsUsed = new bool[] { false, false, true }; // High on marijuana<br />
-        /// myData.items = new List&lt;object&gt; { new { Name = "knife", IsIllegal = true } }; <br />
-        /// SetPedDelegate(myPed.NetworkId, myData);
+        /// PedData myData = new PedData();<br />
+        /// myData.FirstName = "John";<br />
+        /// myData.LastName = "Doe";<br />
+        /// myData.AlcoholLevel = 0.20;<br />
+        /// myData.DrugsUsed = new Drugs[] { Drugs.Meth }; <br />
+        /// myData.Items = new List&lt;Item&gt; { new Item { Name = "knife", IsIllegal = true } }; <br />
+        /// SetPedData(myPed.NetworkId, myData);
+        /// ...
+        /// or
+        /// ...
+        /// Ped ped;
+        /// ped.SetData(); // Extension method
         /// </code>
         /// </example>
         /// </summary>
         /// <param name="NetworkID">The network id of the pedestrian.</param>
-        /// <param name="PedData">The dynamic object with the values to set. The values are case sensitive.</param>
-        /// <seealso cref="SetPedDelegate"/>
+        /// <param name="PedData">The PedData instance containing custom properties.</param>
+        /// <seealso cref="PedData"/>
         public static SetPedDelegate SetPedData;
+
+        public delegate Task<Ped> SpawnPedDelegate(Model model, Vector3 position, float heading);
+        /// <summary>
+        /// Requests the server to spawn a ped with the given parameters.
+        /// </summary>
+        /// <param name="model">Model</param>
+        /// <param name="position">Position</param>
+        /// <param name="heading">Heading</param>
+        /// <returns>Task</returns>
+        /// <seealso cref="SpawnPedDelegate"/>
+        public static SpawnPedDelegate SpawnPed;
+
+        public delegate Task<Vehicle> SpawnVehicleDelegate(Model model, Vector3 position, float heading);
+        /// <summary>
+        /// Requests the server to spawn a vehicle with the given parameters.
+        /// </summary>
+        /// <param name="model">Model</param>
+        /// <param name="position">Position</param>
+        /// <param name="heading">Heading</param>
+        /// <returns>Task</returns>
+        /// <seealso cref="SpawnVehicleDelegate"/>
+        public static SpawnVehicleDelegate SpawnVehicle;
         #endregion
 
         #region Player
