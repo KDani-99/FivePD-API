@@ -12,6 +12,11 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <PackageId>FivePD.API</PackageId>
+    <Version>1.2</Version>
+    <Authors>KDani-99</Authors>
+    <PackageDescription>Official FivePD API nuget package</PackageDescription>
+    <RepositoryUrl>https://github.com/KDani-99/FivePD-Private</RepositoryUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,8 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CitizenFX.Core.Client, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\CitizenFX.Core.Client.1.0.2911\lib\net45\CitizenFX.Core.Client.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>packages\CitizenFX.Core.Client.1.0.2974\lib\net45\CitizenFX.Core.Client.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -72,8 +76,11 @@
     <Compile Include="Utils\WorldZone.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="" />
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
