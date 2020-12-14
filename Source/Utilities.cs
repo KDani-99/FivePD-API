@@ -26,6 +26,10 @@ namespace FivePD.API
         /// </summary>
         public static PedHash[] UnsupportedPedHashes { get; } =
         {
+            PedHash.Cop01SFY,
+            PedHash.Cop01SMY,
+            PedHash.Sheriff01SFY,
+            PedHash.Sheriff01SMY,
             PedHash.Humpback,
             PedHash.Dolphin,
             PedHash.KillerWhale,
