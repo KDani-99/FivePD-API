@@ -2,7 +2,7 @@
 {
     public class Violation
     {
-        string Offence;
-        string Charge;
+        public string Offence;
+        public string Charge;
     }
 }
