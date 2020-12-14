@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CitizenFX.Core;
-using static CitizenFX.Core.Native.API;
 using FivePD.API.Utils;
 
 namespace FivePD.API
@@ -81,22 +80,7 @@ namespace FivePD.API
         /// <param name="location">The location of the ped.</param>
         /// <param name="heading">Which direction the ped is facing.</param>
         /// <returns></returns>
-        protected async Task<Ped> SpawnPed(PedHash pedHash, Vector3 location, float heading = 0f)
-        {
-            Model model = new Model(pedHash);
-            
-            model.Request();
-            while (!model.IsLoaded)
-            {
-                model.Request();
-                await BaseScript.Delay(0);
-            }
-
-            Ped ped = (Ped)Entity.FromHandle(CreatePed(0, (uint)model.Hash, location.X, location.Y, location.Z, heading, true, true));
-            ped.IsPersistent = true;
-
-            return ped;
-        }
+        protected async Task<Ped> SpawnPed(PedHash pedHash, Vector3 location, float heading = 0f) => await Utilities.SpawnPed(new Model(pedHash), location, heading);
 
         /// <summary>
         /// Spawn a properly networked vehicle that is also marked as mission entity. Since this method will also load in the model, this call must be awaited.
@@ -105,25 +89,10 @@ namespace FivePD.API
         /// <param name="location">The location of the vehicle.</param>
         /// <param name="heading">Which direction the vehicle is facing.</param>
         /// <returns>The vehicle you spawned</returns>
-        protected async Task<Vehicle> SpawnVehicle(VehicleHash vehicleHash, Vector3 location, float heading = 0f)
-        {
-            Model model = new Model(vehicleHash);
+        protected async Task<Vehicle> SpawnVehicle(VehicleHash vehicleHash, Vector3 location, float heading = 0f) => await Utilities.SpawnVehicle(new Model(vehicleHash), location, heading);
 
-            model.Request();
-            while (!model.IsLoaded)
-            {
-                model.Request();
-                await BaseScript.Delay(0);
-            }
-
-            Vehicle vehicle = (Vehicle)Entity.FromHandle(CreateVehicle((uint)model.Hash, location.X, location.Y, location.Z, heading, true, true));
-            vehicle.IsPersistent = true;
-
-            return vehicle;
-        }
-       /// <summary>
-        /// DO NOT USE. Only here for backwards compatibility with callouts that use the older API.<br /><br />
-        /// See <see cref="RandomUtils.GetRandomPed"/> for the alternative implementations.
+        /// <summary>
+        /// Select a random <see cref="PedHash"/>.
         /// </summary>
         /// <returns></returns>
         [Obsolete("Please use RandomUtils.GetRandomPed, this method will be removed in a future version.", true)]
@@ -258,7 +227,8 @@ namespace FivePD.API
         /// <seealso cref="Tick"/>
         public async Task ReceiveTick()
         {
-            if (Tick != null) await Tick.Invoke();
+            if (Tick != null)
+                await Tick.Invoke();
         }
 
         /// <summary>
