@@ -85,6 +85,22 @@ namespace FivePD.API
             PedHash.Westy
         };
 
+        public delegate void EnableModDelegate();
+        /// <summary>
+        /// Enables the mod for the local player. Can be useful for integrating other resources.
+        /// Should only be used in Plugins.
+        /// Can be called dynamically. (Allows you to toggle)
+        /// </summary>
+        public static EnableModDelegate EnableMod;
+
+        public delegate void DisableModDelegate();
+        /// <summary>
+        /// Disables the mod for the local player. Can be useful for integrating other resources.
+        /// Should only be used in Plugins.
+        /// Can be called dynamically. (Allows you to toggle)
+        /// </summary>
+        public static DisableModDelegate DisableMod;
+
         public delegate void ForceCalloutDelegate(string guid);
         /// <summary>
         /// Forces a callout with the given GUID or name (eg. Trespassing).
