@@ -14,9 +14,9 @@ namespace Plugin
         private async Task OnDutyStatusChange(bool isOnDuty)
         {
             if (isOnDuty)
-                Debug.WriteLine("The player is on duty");
+                Debug.WriteLine("The player is on duty"); 
             else
-                Debug.WriteLine("The player is not on duty");
+                Debug.WriteLine("The player is off duty");
         }
 
     }
