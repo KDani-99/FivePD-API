@@ -43,7 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CitizenFX.Core.Client, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\CitizenFX.Core.Client.1.0.2974\lib\net45\CitizenFX.Core.Client.dll</HintPath>
+      <HintPath>packages\CitizenFX.Core.Client.1.0.3307\lib\net45\CitizenFX.Core.Client.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
