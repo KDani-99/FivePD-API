@@ -159,6 +159,15 @@ namespace FivePD.API
         /// Returns the driver ped from of pulled over vehicle
         /// </summary>
         public static GetDriverFromTrafficStopDelegate GetDriverFromTrafficStop;
+        /// <summary>
+        /// GetPassengersFromTrafficStopDelegate is a method reference with zero parameter and with return type of `Ped[]`
+        /// </summary>
+        /// <returns>An array of passenger peds from the pulled over vehicle (driver ped will not be added into the array)</returns>
+        public delegate Ped[] GetPassengersFromTrafficStopDelegate();
+        /// <summary>
+        /// Returns an array of passenger peds of the pulled over vehicle.
+        /// </summary>
+        public static GetPassengersFromTrafficStopDelegate GetPassengersFromTrafficStop;
         #endregion
 
         #region Backups
