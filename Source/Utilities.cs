@@ -294,6 +294,26 @@ namespace FivePD.API
         public delegate void SyncBlipDeleteDelegate(Blip blip);
         public static SyncBlipDeleteDelegate SyncBlipDelete;
         /// <summary>
+        /// <para>SetPlayerDataFlags is an enum that contains every possible option that you can use to set player data</para>
+        /// <para>Use `-1` as the department id if you want to kick a player from the player's current department</para>
+        /// </summary>
+        public enum SetPlayerDataFlags
+        {
+            DepartmentID = 1,
+            Callsign = 2,
+            All = DepartmentID | Callsign
+        }
+        /// <summary>
+        /// SetPlayerDataDelegate is a method reference with a PlayerData (playerData) and SetPlayerDataFlags (flags) parameters and with return type of `Task`
+        /// </summary>
+        /// <param name="playerData">The player data object</param>
+        /// <param name="flags">Flags</param>
+        /// <returns>(awaitable) Task</returns>
+        public delegate Task SetPlayerDataDelegate(PlayerData playerData, SetPlayerDataFlags flags);
+        /// <summary>
+        /// Sets player related data (persistent)
+        /// </summary>
+        public static SetPlayerDataDelegate SetPlayerData;
         /// Returns the closest ped.
         /// </summary>
         public static Ped GetClosestPed(Ped p)
