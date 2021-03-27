@@ -150,6 +150,15 @@ namespace FivePD.API
 
         public delegate Vehicle GetVehicleFromTrafficStopDelegate();
         public static GetVehicleFromTrafficStopDelegate GetVehicleFromTrafficStop;
+        /// <summary>
+        /// GetDriverFromTrafficStopDelegate is a method reference with zero parameter and with return type of `Ped`
+        /// </summary>
+        /// <returns>The driver ped of the pulled over vehicle</returns>
+        public delegate Ped GetDriverFromTrafficStopDelegate();
+        /// <summary>
+        /// Returns the driver ped from of pulled over vehicle
+        /// </summary>
+        public static GetDriverFromTrafficStopDelegate GetDriverFromTrafficStop;
         #endregion
 
         #region Backups
