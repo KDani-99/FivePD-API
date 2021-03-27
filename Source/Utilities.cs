@@ -7,17 +7,47 @@ using FivePD.API.Utils;
 
 namespace FivePD.API
 {
+    /// <summary>
+    /// FivePD Utilities class
+    /// </summary>
     public static class Utilities
     {
+        /// <summary>
+        /// An enum of FivePD services
+        /// </summary>
         public enum Services
         {
+            /// <summary>
+            /// Ambulance service
+            /// </summary>
             Ambulance = 0,
+            /// <summary>
+            /// Air ambulance service
+            /// </summary>
             AirAmbulance = 1,
+            /// <summary>
+            /// Fire department service
+            /// </summary>
             FireDept = 2,
+            /// <summary>
+            /// Coroner service
+            /// </summary>
             Coroner = 3,
+            /// <summary>
+            /// Animal control service
+            /// </summary>
             AnimalControl = 4,
+            /// <summary>
+            /// Tow truck service
+            /// </summary>
             TowTruck = 5,
+            /// <summary>
+            /// Mechanic service
+            /// </summary>
             Mechanic = 6,
+            /// <summary>
+            /// Prison transport service
+            /// </summary>
             PrisonTransport = 7
         }
 
@@ -84,35 +114,48 @@ namespace FivePD.API
             PedHash.SteveHainsCutscene,
             PedHash.Westy
         };
-
+        /// <summary>
+        /// EnableModDelegate is a method reference with zero parameter
+        /// </summary>
         public delegate void EnableModDelegate();
         /// <summary>
-        /// Enables the mod for the local player. Can be useful for integrating other resources.
-        /// Should only be used in Plugins.
-        /// Can be called dynamically. (Allows you to toggle)
+        /// <para>Enables the mod for the local player. Can be useful for integrating other resources.</para>
+        /// <para>Should only be used in Plugins.</para>
+        /// <para>Can be called dynamically. (Allows you to toggle)</para>
         /// </summary>
         public static EnableModDelegate EnableMod;
-
+        /// <summary>
+        /// DisableModDelegate is a method reference with zero parameter
+        /// </summary>
         public delegate void DisableModDelegate();
         /// <summary>
-        /// Disables the mod for the local player. Can be useful for integrating other resources.
-        /// Should only be used in Plugins.
-        /// Can be called dynamically. (Allows you to toggle)
+        /// <para>Disables the mod for the local player. Can be useful for integrating other resources.</para>
+        /// <para> Should only be used in Plugins.</para>
+        /// <para>Can be called dynamically. (Allows you to toggle)</para>
         /// </summary>
         public static DisableModDelegate DisableMod;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="guid"></param>
         public delegate void ForceCalloutDelegate(string guid);
         /// <summary>
         /// Forces a callout with the given GUID or name (eg. Trespassing).
         /// </summary>
         public static ForceCalloutDelegate ForceCallout;
-
+        /// <summary>
+        /// GetCurrentCalloutDelegate is a method reference with zero parameter and with return type of `Callout`
+        /// </summary>
+        /// <returns>Callout object</returns>
         public delegate Callout GetCurrentCalloutDelegate();
         /// <summary>
         /// Returns the current ongoing callout.
         /// </summary>
         public static GetCurrentCalloutDelegate GetCurrentCallout;
-
+        /// <summary>
+        /// GetCalloutsDelegate is a method reference with zero parameter and with return type of `List`
+        /// </summary>
+        /// <returns>A list of callout names</returns>
         public delegate List<string> GetCalloutsDelegate();
         /// <summary>
         /// Returns a List with every enabled callout.
@@ -120,13 +163,37 @@ namespace FivePD.API
         public static GetCalloutsDelegate GetCallouts;
 
         #region Vehicle
+        /// <summary>
+        ///  SetVehicleDataDelegate is a method reference with an int (vehicle) and VehicleData (data) parameters and with return type of `Task`
+        /// </summary>
+        /// <param name="networkID">The network id of the vehicle</param>
+        /// <returns>(awaitable) VehicleData object</returns>
         public delegate Task<VehicleData> GetVehicleDataDelegate(int networkID);
+        /// <summary>
+        /// Returns a VehicleData object that is associated with the given vehicle (net id)
+        /// </summary>
         public static GetVehicleDataDelegate GetVehicleData;
 
+        /// <summary>
+        /// SetVehicleDataDelegate is a method reference with an int (vehicle) and VehicleData (data) parameters
+        /// </summary>
+        /// <param name="vehicle">The network id of the vehicle</param>
+        /// <param name="data">A VehicleData object</param>
         public delegate void SetVehicleDataDelegate(int vehicle, VehicleData data);
+        /// <summary>
+        /// Sets vehicle related data
+        /// </summary>
         public static SetVehicleDataDelegate SetVehicleData;
 
+        /// <summary>
+        /// ExcludeVehicleFromTrafficStopDelegate is a method reference with an int (networkID) and bool (exclude) parameters
+        /// </summary>
+        /// <param name="networkID">The network ID of the vehicle</param>
+        /// <param name="exclude">Enable/Disable traffic stop functions</param>
         public delegate void ExcludeVehicleFromTrafficStopDelegate(int networkID, bool exclude);
+        /// <summary>
+        /// Enables/Disables traffic stop functions on a vehicle (with the given network id)
+        /// </summary>
         public static ExcludeVehicleFromTrafficStopDelegate ExcludeVehicleFromTrafficStop;
         #endregion
 
@@ -145,10 +212,23 @@ namespace FivePD.API
         #endregion
 
         #region Traffic Stop
+        /// <summary>
+        /// IsPlayerPerformingTrafficStopDelegate is a method reference with zero parameter and with return type of `bool`
+        /// </summary>
+        /// <returns>Whether the local player is performing a traffic stop or not</returns>
         public delegate bool IsPlayerPerformingTrafficStopDelegate();
+        /// <summary>
+        /// Returns whether the local player is in a traffic stop or not
+        /// </summary>
         public static IsPlayerPerformingTrafficStopDelegate IsPlayerPerformingTrafficStop;
-
+        /// <summary>
+        /// GetVehicleFromTrafficStopDelegate is a method reference with zero parameter and with return type of `Vehicle`
+        /// </summary>
+        /// <returns>The vehicle from the traffic stop</returns>
         public delegate Vehicle GetVehicleFromTrafficStopDelegate();
+        /// <summary>
+        /// Returns the pulled over vehicle
+        /// </summary>
         public static GetVehicleFromTrafficStopDelegate GetVehicleFromTrafficStop;
         /// <summary>
         /// GetDriverFromTrafficStopDelegate is a method reference with zero parameter and with return type of `Ped`
@@ -268,30 +348,61 @@ namespace FivePD.API
 
         #region Player
         /// <summary>
-        /// Call GetPlayerData() if you want to access the PlayerData object. 
-        /// Please note that you cannot call this method in the constructor of your callout. 
-        /// Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods.<br /><br />
-        /// The following properties can be accessed in the PlayerData:<br />
+        /// <para>Call GetPlayerData() if you want to access the PlayerData object. </para>
+        /// <para>Please note that you cannot call this method in the constructor of your callout. </para>
+        /// <para>Use the method inside of the <see cref="Init"/> or <see cref="OnStart"/> methods.</para>
+        /// <para>The following properties can be accessed in the PlayerData:</para>
         ///      - DisplayName (string) <br />
         ///      - Callsign (string) <br />
         ///      - Department (string)  <br />
         ///      - DepartmentID (int)  <br />
         /// </summary>
         public static Func<PlayerData> GetPlayerData;
-
+        /// <summary>
+        /// IsPlayerOnDutyDelegate is a method reference with zero parameter
+        /// </summary>
+        /// <returns>Whether the local player is on duty</returns>
         public delegate bool IsPlayerOnDutyDelegate();
+        /// <summary>
+        /// Returns whether the local player is on duty
+        /// </summary>
         public static IsPlayerOnDutyDelegate IsPlayerOnDuty;
-
+        /// <summary>
+        /// SetPlayerDutyDelegate is a method reference with a bool (onDuty) parameter
+        /// </summary>
+        /// <param name="onDuty">On/Off</param>
         public delegate void SetPlayerDutyDelegate(bool onDuty);
+        /// <summary>
+        /// Sets duty status of the local player (on/off)
+        /// </summary>
         public static SetPlayerDutyDelegate SetPlayerDuty;
-
+        /// <summary>
+        /// SyncBlipDelegate is a method reference with a Blip (blip) parameter
+        /// </summary>
+        /// <param name="blip">Blip to sync</param>
         public delegate void SyncBlipDelegate(Blip blip);
+        /// <summary>
+        /// Syncs the given blip with other players
+        /// </summary>
         public static SyncBlipDelegate SyncBlip;
-
+        /// <summary>
+        /// SyncBlipWithRadiusDelegate is a method reference with a Blip (blip) and float (radius) parameters
+        /// </summary>
+        /// <param name="blip">Blip to sync</param>
+        /// <param name="radius">radius of the blip</param>
         public delegate void SyncBlipWithRadiusDelegate(Blip blip,float radius);
+        /// <summary>
+        /// Syncs the given blip (with radius) with other players
+        /// </summary>
         public static SyncBlipWithRadiusDelegate SyncBlipWithRadius;
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="blip"></param>
         public delegate void SyncBlipDeleteDelegate(Blip blip);
+        /// <summary>
+        /// Deletes the previously synced blip object (globally)
+        /// </summary>
         public static SyncBlipDeleteDelegate SyncBlipDelete;
         /// <summary>
         /// <para>SetPlayerDataFlags is an enum that contains every possible option that you can use to set player data</para>
@@ -314,6 +425,7 @@ namespace FivePD.API
         /// Sets player related data (persistent)
         /// </summary>
         public static SetPlayerDataDelegate SetPlayerData;
+        /// <summary>
         /// Returns the closest ped.
         /// </summary>
         public static Ped GetClosestPed(Ped p)
