@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("FivePD")]
 [assembly: AssemblyProduct("FivePD.API")]
-[assembly: AssemblyCopyright("FivePD © 2020")]
+[assembly: AssemblyCopyright("FivePD © 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 // Setting ComVisible to false makes the types in this assembly not visible
